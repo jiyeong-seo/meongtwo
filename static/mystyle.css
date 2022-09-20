@@ -57,3 +57,37 @@ input::-webkit-calendar-picker-indicator {
 .post-image-box {
     margin-bottom: 20px;
 }
+
+.navbar.is-fixed-top {
+    height: 140px;
+    margin-bottom: 10px;
+}
+
+body.has-navbar-fixed-top {
+    padding-top: 160px;
+}
+
+.navbar-brand {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.navbar-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-item img {
+    max-height: 4.5rem;
+}
+
+.navbar-title {
+    font-size: 25px !important;
+}
+
+.comment-content {
+    margin-top: 25px;
+}
