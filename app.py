@@ -15,7 +15,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-# 포스트 노출 갯수
+# 페이저 포스트 노출 갯수
 page_view_config = 5
 
 ca = certifi.where()
@@ -30,6 +30,8 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
+        
+        # 페이저 용 카운트
         post_count = int((db.posts.count_documents({}) / page_view_config) + 1)
         return render_template('index.html', user_info=user_info, post_count=post_count)
     except jwt.ExpiredSignatureError:
@@ -54,8 +56,8 @@ def user(username):
 
         user_info = db.users.find_one({"username": username}, {"_id": False})
 
+        #페이저 프로필용 카운트
         post_count = int((db.posts.count_documents({"username": username}) / page_view_config) + 1)
-
         return render_template('user.html', user_info=user_info, status=status, post_count=post_count)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
