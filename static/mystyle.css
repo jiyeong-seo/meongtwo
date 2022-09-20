@@ -1,5 +1,5 @@
 body {
-    background-color: #aed3ff;
+    background-color: dodgerblue;
     min-height: 100vh;
 }
 
@@ -10,19 +10,19 @@ body {
 }
 
 .is-sparta {
-    color: #aed3ff !important;
+    color: dodgerblue !important;
 }
 
 .button.is-sparta {
-    background-color: #aed3ff;
+    background-color: dodgerblue;
     border-color: transparent;
     color: #fff !important;
 }
 
 .button.is-sparta.is-outlined {
     background-color: transparent;
-    border-color: #aed3ff;
-    color: #aed3ff !important;
+    border-color: dodgerblue;
+    color: dodgerblue !important;
 }
 
 .modal-content {
@@ -56,6 +56,16 @@ input::-webkit-calendar-picker-indicator {
 
 .post-image-box {
     margin-bottom: 20px;
+}
+
+.white-font-a {
+    color:white;
+}
+
+.pager-btn {
+     display:inline-block;
+    float:left;
+    margin:0px 5px 0px 5px;
 }
 
 .navbar.is-fixed-top {
