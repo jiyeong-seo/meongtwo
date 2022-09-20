@@ -28,10 +28,10 @@
     <script src="{{ url_for('static', filename='myjs.js') }}"></script>
 
 
-    <script>
-        $(document).ready(function () {
-            get_posts("{{ user_info.username }}")
-        })
+        <script>
+            $(document).ready(function () {
+                get_posts("{{ user_info.username }}", 1)
+            })
 
         function sign_out() {
             $.removeCookie('mytoken', {path: '/'});
@@ -82,7 +82,6 @@
 
 </nav>
 <div class="main-image">
-      <strong >댕댕이들을 위한 수제 간식을 자랑 해봐요!</strong>
 </div>
 <section class="hero is-white user-profile">
     <div class="hero-body" style="padding-bottom:1rem;margin:auto;min-width: 400px">
@@ -242,8 +241,16 @@
 <section class="section">
     <div id="post-box" class="container">
 
-    </div>
-</section>
-
-</body>
+            </div>
+        </section>
+        <div class="pager-div" style="margin:auto; color:white;">
+            <ul class="pager">
+                <a class="white-font-a" href="/get_posts?page=1">◁</a>
+                {% for i in range(post_count) %}
+                    <li class = pager-btn><a class="white-font-a" onclick="get_posts('{{ user_info.username }}', {{ loop.index }})">{{ loop.index }}</a></li>
+                {% endfor %}
+                <a class="white-font-a" href="/get_posts?page=1">▷</a>
+            </ul>
+        </div>
+    </body>
 </html>
