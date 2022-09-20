@@ -171,9 +171,9 @@ def comment_posting():
         user_info = db.users.find_one({"username": payload["id"]})
         comment_receive = request.form["comment_give"]
         date_receive = request.form["date_give"]
-        postid_receive = request.form["id_give"][0]
+        postid_receive = request.form["id_give"]
 
-        print(comment_receive)
+        print(postid_receive)
 
         doc = {
             "username": user_info["username"],

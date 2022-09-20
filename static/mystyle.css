@@ -1,5 +1,5 @@
 body {
-    background-color: dodgerblue;
+    background-color: #aed3ff;
     min-height: 100vh;
 }
 
@@ -10,19 +10,19 @@ body {
 }
 
 .is-sparta {
-    color: dodgerblue !important;
+    color: #aed3ff !important;
 }
 
 .button.is-sparta {
-    background-color: dodgerblue;
+    background-color: #aed3ff;
     border-color: transparent;
     color: #fff !important;
 }
 
 .button.is-sparta.is-outlined {
     background-color: transparent;
-    border-color: dodgerblue;
-    color: dodgerblue !important;
+    border-color: #aed3ff;
+    color: #aed3ff !important;
 }
 
 .modal-content {
@@ -60,11 +60,13 @@ input::-webkit-calendar-picker-indicator {
 
 .navbar.is-fixed-top {
     height: 140px;
-    margin-bottom: 10px;
+
 }
 
-body.has-navbar-fixed-top {
-    padding-top: 160px;
+body.has-navbar-fixed-top,
+.login-section
+{
+    padding-top: 170px;
 }
 
 .navbar-brand {
@@ -91,3 +93,24 @@ body.has-navbar-fixed-top {
 .comment-content {
     margin-top: 25px;
 }
+
+.comment-input {
+ margin-bottom: 20px;
+}
+
+.main-image {
+    width: 100vw;
+    height: 600px;
+    position: relative;
+    top: -30px;
+    background-image: url("../static/main.png");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.user-profile {
+    position: relative;
+    top: -30px;
+}
+

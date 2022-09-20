@@ -31,8 +31,9 @@ function commentPost(index, id) {
     form_data.append("comment_give", comment);
     form_data.append("date_give", today);
     form_data.append("id_give", id);
-    console.log(comment, today, form_data, id);
 
+    console.log(comment, today, form_data, id);
+    console.log("id ===>", typeof id);
     $.ajax({
         type: "POST",
         url: "/posting/comment",
@@ -118,7 +119,7 @@ function get_posts(username) {
                   <p class="control">
                     <textarea
                       id="comment-post${i}"
-                      class="textarea"
+                      class="textarea comment-input"
                       placeholder="칭찬 댓글을 남겨주세요!"
                     ></textarea>
                   </p>
@@ -182,7 +183,7 @@ function get_posts(username) {
                   <p class="control">
                     <textarea
                       id="comment-post${i}"
-                      class="textarea"
+                      class="textarea comment-input"
                       placeholder="칭찬 댓글을 남겨주세요!"
                     ></textarea>
                   </p>
