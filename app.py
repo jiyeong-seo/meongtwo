@@ -15,6 +15,9 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
+# 포스트 노출 갯수
+page_view_config = 5
+
 ca = certifi.where()
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.38yzx.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
@@ -27,7 +30,8 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        return render_template('index.html', user_info=user_info)
+        post_count = int((db.posts.count_documents({}) / page_view_config) + 1)
+        return render_template('index.html', user_info=user_info, post_count=post_count)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -49,7 +53,10 @@ def user(username):
         status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
 
         user_info = db.users.find_one({"username": username}, {"_id": False})
-        return render_template('user.html', user_info=user_info, status=status)
+
+        post_count = int((db.posts.count_documents({"username": username}) / page_view_config) + 1)
+
+        return render_template('user.html', user_info=user_info, status=status, post_count=post_count)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -170,14 +177,26 @@ def get_posts():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         my_username = payload["id"]
         username_receive = request.args.get("username_give")
-        if username_receive == "":
-            posts = list(db.posts.find({}).sort("date", -1).limit(20))
+
+        # 페이저 기능
+        # sort(기준 필드,디폴트 값은 정렬(ascending) -1은 역정렬(descending)), list(가져올 갯 수), skip(건너뛸 갯 수 offset)
+        page_receive = request.args.get("page")
+
+        if page_receive is not None and page_receive != "":
+            page = int(request.args.get("page"))
         else:
-            posts = list(db.posts.find({"username": username_receive}).sort("date", -1).limit(20))
+            page = 1
+
+        print(page)
+
+        if username_receive == "":
+            posts = list(db.posts.find({}).sort("date", -1).limit(page_view_config).skip((page-1)*page_view_config))
+        else:
+            posts = list(db.posts.find({"username": username_receive}).sort("date", -1).limit(page_view_config).skip((page-1)*page_view_config))
         for post in posts:
             post["_id"] = str(post["_id"])
             post["count_heart"] = db.likes.count_documents({"post_id": post["_id"], "type": "heart"})
-            post["heart_by_me"] = bool( db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": my_username}))
+            post["heart_by_me"] = bool(db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": my_username}))
 
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"]})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):

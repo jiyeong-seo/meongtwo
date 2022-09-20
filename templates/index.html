@@ -154,5 +154,14 @@
 
             </div>
         </section>
+        <div class="pager-div" style="margin:auto; color:white;">
+            <ul class="pager">
+                <a class="white-font-a" href="/get_posts?page=1">◁</a>
+                {% for i in range(post_count) %}
+                    <li class = pager-btn><a class="white-font-a" onclick="get_posts('', {{ loop.index }})">{{ loop.index }}</a></li>
+                {% endfor %}
+                <a class="white-font-a" href="/get_posts?page=1">▷</a>
+            </ul>
+        </div>
     </body>
 </html>

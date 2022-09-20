@@ -57,3 +57,13 @@ input::-webkit-calendar-picker-indicator {
 .post-image-box {
     margin-bottom: 20px;
 }
+
+.white-font-a {
+    color:white;
+}
+
+.pager-btn {
+     display:inline-block;
+    float:left;
+    margin:0px 5px 0px 5px;
+}

@@ -23,14 +23,17 @@ function post() {
     })
 }
 
-function get_posts(username) {
+function get_posts(username, page) {
     if (username === undefined) {
         username = ""
+    }
+    if (page === undefined) {
+        page = 1
     }
     $("#post-box").empty()
     $.ajax({
         type: "GET",
-        url: `/get_posts?username_give=${username}`,
+        url: `/get_posts?username_give=${username}&page=${page}`,
         data: {},
         success: function (response) {
             if (response["result"] === "success") {
