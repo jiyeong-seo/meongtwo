@@ -74,7 +74,7 @@
                                         <div class="file has-name">
                                             <label class="file-label" style="width:100%">
                                                 <input id="input-pic" class="file-input" type="file"
-                                                       name="resume">
+                                                       name="resume" onchange="give_me_my_file(this.value)">
                                                 <span class="file-cta">
                                                     <span class="file-icon">
                                                         <i class="fa fa-upload"></i>
@@ -82,7 +82,8 @@
                                                     <span class="file-label">파일 선택</span>
                                                 </span>
                                                 <span id="file-name" class="file-name" style="width:100%;max-width:100%">
-{#                                                      style="width:100%;max-width:100%">{{ user_info.profile_pic }}#}
+
+{#                                                    {{ user_info.profile_pic }}#}
                                                 </span>
                                             </label>
                                         </div>

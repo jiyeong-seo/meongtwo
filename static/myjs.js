@@ -189,3 +189,9 @@ function toggle_like(post_id, type) {
 
     }
 }
+
+function give_me_my_file (value) {
+    let path_array = value.split("\\", 3)
+    let file_name = path_array[2]
+    $('.file-name').text(file_name)
+}

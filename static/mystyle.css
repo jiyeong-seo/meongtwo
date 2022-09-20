@@ -54,10 +54,6 @@ input::-webkit-calendar-picker-indicator {
     color: orangered;
 }
 
-.box-non-radius {
-    border-radius: 0px;
-}
-
 .post-image-box {
     margin-bottom: 20px;
 }
