@@ -1,5 +1,5 @@
 body {
-    background-color: dodgerblue;
+    background-color: #aaddff;
     min-height: 100vh;
 }
 
@@ -10,19 +10,19 @@ body {
 }
 
 .is-sparta {
-    color: dodgerblue !important;
+    color: #9ecefc !important;
 }
 
 .button.is-sparta {
-    background-color: dodgerblue;
+    background-color: #aaddff;
     border-color: transparent;
     color: #fff !important;
 }
 
 .button.is-sparta.is-outlined {
     background-color: transparent;
-    border-color: dodgerblue;
-    color: dodgerblue !important;
+    border-color: #aaddff;
+    color: #aaddff !important;
 }
 
 .modal-content {
@@ -35,9 +35,9 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .image img {
-    object-fit:cover;
-    width:100%;
-    height:100%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 
 .fa-heart-o:before {
@@ -54,19 +54,19 @@ input::-webkit-calendar-picker-indicator {
     color: orangered;
 }
 
-.post-image-box {
-    margin-bottom: 20px;
-}
+/*.post-image-box {*/
+/*    margin-bottom: 20px;*/
+/*}*/
 
-.white-font-a {
-    color:white;
-}
+/*.white-font-a {*/
+/*    color:white;*/
+/*}*/
 
-.pager-btn {
-     display:inline-block;
-    float:left;
-    margin:0px 5px 0px 5px;
-}
+/*.pager-btn {*/
+/*     display:inline-block;*/
+/*    float:left;*/
+/*    margin:0px 5px 0px 5px;*/
+/*}*/
 
 .navbar.is-fixed-top {
     height: 140px;
@@ -74,8 +74,7 @@ input::-webkit-calendar-picker-indicator {
 }
 
 body.has-navbar-fixed-top,
-.login-section
-{
+.login-section {
     padding-top: 170px;
 }
 
@@ -105,7 +104,7 @@ body.has-navbar-fixed-top,
 }
 
 .comment-input {
- margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .main-image {
@@ -117,10 +116,56 @@ body.has-navbar-fixed-top,
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .user-profile {
     position: relative;
     top: -30px;
+}
+
+.main-image strong {
+    font-family: 'Stylish', sans-serif;
+    font-size: 51px;
+    color: #40f88e;
+}
+
+.comment-area {
+    margin: 20px;
+    display: none;
+}
+
+.comment-area__content {
+    height: 100px;
+    /*overflow: scroll;*/
+}
+
+.active {
+    display: block;
+}
+
+.pagination {
+    margin-top: 20px;
+    padding-bottom: 50px;
+}
+
+.pagination-list > li > a {
+    background-color: #fff;
+    color: #9ecefc;
+    border: none;
+    margin: 0 15px;
+    font-size: 19px;
+    border-radius: 50px;
+}
+
+.pagination-list > li > a:hover {
+    color: #449bee;
+
+}
+
+.is-rounded {
+    height: 70px;
 }
 

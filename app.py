@@ -30,7 +30,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        
+
         # 페이저 용 카운트
         post_count = int((db.posts.count_documents({}) / page_view_config) + 1)
         return render_template('index.html', user_info=user_info, post_count=post_count)
