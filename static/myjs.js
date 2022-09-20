@@ -1,13 +1,21 @@
 function post() {
     let comment = $("#textarea-post").val()
     let today = new Date().toISOString()
+    // 강아지 사진 보내기
+    let file = $('#input-pic')[0].files[0]
+    let form_data = new FormData()
+    form_data.append("comment_give", comment)
+    form_data.append("date_give", today)
+    form_data.append("img_file_give", file)
+    console.log(comment, today, file, form_data)
+
     $.ajax({
         type: "POST",
         url: "/posting",
-        data: {
-            comment_give: comment,
-            date_give: today
-        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
         success: function (response) {
             $("#modal-post").removeClass("is-active")
             window.location.reload()
@@ -31,37 +39,79 @@ function get_posts(username) {
                     let post = posts[i]
                     let time_post = new Date(post["date"])
                     let time_before = time2str(time_post)
-
                     let class_heart = post['heart_by_me'] ? "fa-heart": "fa-heart-o"
 
-                    let html_temp = `<div class="box" id="${post["_id"]}">
-                                        <article class="media">
-                                            <div class="media-left">
-                                                <a class="image is-64x64" href="/user/${post['username']}">
-                                                    <img class="is-rounded" src="/static/${post['profile_pic_real']}"
-                                                         alt="Image">
-                                                </a>
-                                            </div>
-                                            <div class="media-content">
-                                                <div class="content">
-                                                    <p>
-                                                        <strong>${post['profile_name']}</strong> <small>@${post['username']}</small> <small>${time_before}</small>
-                                                        <br>
-                                                        ${post['comment']}
-                                                    </p>
-                                                </div>
-                                                <nav class="level is-mobile">
-                                                    <div class="level-left">
-                                                        <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like('${post['_id']}', 'heart')">
-                                                            <span class="icon is-small"><i class="fa ${class_heart}"
-                                                                                           aria-hidden="true"></i></span>&nbsp;<span class="like-num">${num2str(post["count_heart"])}</span>
-                                                        </a>
-                                                    </div>
+                    // 포스팅 사진
+                    let html_temp = ``
+                    let postfile_pic_real = ""
+                    if (!post["postfile_pic_real"] == "") {
 
-                                                </nav>
+                        postfile_pic_real = post["postfile_pic_real"]
+
+                        html_temp = `<div class="box" id="${post["_id"]}">
+                                            <div class="post-image-box">
+                                                <img src="/static/${post['postfile_pic_real']}">
                                             </div>
-                                        </article>
-                                    </div>`
+                                            <article class="media">
+                                                <div class="media-left">
+                                                    <a class="image is-64x64" href="/user/${post['username']}">
+                                                        <img class="is-rounded" src="/static/${post['profile_pic_real']}"
+                                                             alt="Image">
+                                                    </a>
+                                                </div>
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <p>
+                                                            <strong>${post['profile_name']}</strong> <small>@${post['username']}</small> <small>${time_before}</small>
+                                                            <br>
+                                                            ${post['comment']}
+                                                        </p>
+                                                    </div>
+                                                    <nav class="level is-mobile">
+                                                        <div class="level-left">
+                                                            <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like('${post['_id']}', 'heart')">
+                                                                <span class="icon is-small"><i class="fa ${class_heart}"
+                                                                                               aria-hidden="true"></i></span>&nbsp;<span class="like-num">${num2str(post["count_heart"])}</span>
+                                                            </a>
+                                                        </div>
+    
+                                                    </nav>
+                                                </div>
+                                            </article>
+                                        </div>`
+                    }
+                    else {
+
+                        html_temp = `<div class="box" id="${post["_id"]}">
+                                            <article class="media">
+                                                <div class="media-left">
+                                                    <a class="image is-64x64" href="/user/${post['username']}">
+                                                        <img class="is-rounded" src="/static/${post['profile_pic_real']}"
+                                                             alt="Image">
+                                                    </a>
+                                                </div>
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <p>
+                                                            <strong>${post['profile_name']}</strong> <small>@${post['username']}</small> <small>${time_before}</small>
+                                                            <br>
+                                                            ${post['comment']}
+                                                        </p>
+                                                    </div>
+                                                    <nav class="level is-mobile">
+                                                        <div class="level-left">
+                                                            <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like('${post['_id']}', 'heart')">
+                                                                <span class="icon is-small"><i class="fa ${class_heart}"
+                                                                                               aria-hidden="true"></i></span>&nbsp;<span class="like-num">${num2str(post["count_heart"])}</span>
+                                                            </a>
+                                                        </div>
+
+                                                    </nav>
+                                                </div>
+                                            </article>
+                                        </div>`
+                    }
+
                     $("#post-box").append(html_temp)
                 }
             }

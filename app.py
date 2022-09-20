@@ -1,3 +1,5 @@
+import os
+
 from pymongo import MongoClient
 import jwt
 import datetime
@@ -142,6 +144,19 @@ def posting():
             "comment": comment_receive,
             "date": date_receive
         }
+        if 'img_file_give' in request.files:
+            file = request.files["img_file_give"]
+            filename = secure_filename(file.filename)
+
+            # 이미지 업로드 경로가 존재 하지 않을 경우 생성
+            path = "./static/post_images/"
+            if not os.path.exists(path):
+                os.mkdir(path)
+
+            file_path = f"post_images/{filename}"
+            file.save("./static/" + file_path)
+            doc["postfile_pic"] = filename
+            doc["postfile_pic_real"] = file_path
         db.posts.insert_one(doc)
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
