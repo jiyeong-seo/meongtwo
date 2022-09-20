@@ -35,9 +35,9 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .image img {
-    object-fit:cover;
-    width:100%;
-    height:100%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 
 .fa-heart-o:before {
@@ -64,8 +64,7 @@ input::-webkit-calendar-picker-indicator {
 }
 
 body.has-navbar-fixed-top,
-.login-section
-{
+.login-section {
     padding-top: 170px;
 }
 
@@ -95,7 +94,7 @@ body.has-navbar-fixed-top,
 }
 
 .comment-input {
- margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .main-image {
@@ -107,6 +106,9 @@ body.has-navbar-fixed-top,
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .user-profile {
@@ -114,3 +116,22 @@ body.has-navbar-fixed-top,
     top: -30px;
 }
 
+.main-image strong {
+    font-family: 'Stylish', sans-serif;
+    font-size: 51px;
+    color: #40f88e;
+}
+
+.comment-area {
+    margin: 20px;
+    display: none;
+}
+
+.comment-area__content {
+    height:  100px;
+    /*overflow: scroll;*/
+}
+
+.active {
+    display: block;
+}
