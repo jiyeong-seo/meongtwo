@@ -354,7 +354,7 @@ function delete_post(id) {
             post_id_give: post_id
         },
         success: function (response) {
-            alert(response);
+            alert(response['msg']);
             window.location.reload();
         },
     });

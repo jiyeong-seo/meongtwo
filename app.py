@@ -16,7 +16,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'SPARTA'
 
 # 페이저 포스트 노출 갯수
-page_view_config = 5
+page_view_config = 3
 
 ca = certifi.where()
 
@@ -32,7 +32,12 @@ def home():
         user_info = db.users.find_one({"username": payload["id"]})
 
         # 페이저 용 카운트
-        post_count = int((db.posts.count_documents({}) / page_view_config) + 1)
+        post_count = int(db.posts.count_documents({}))
+        if post_count % page_view_config == 0:
+            post_count = int((post_count / page_view_config))
+        elif post_count % page_view_config > 0:
+            post_count = int((post_count / page_view_config) + 1)
+
         return render_template('index.html', user_info=user_info, post_count=post_count)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
