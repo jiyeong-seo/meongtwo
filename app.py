@@ -241,6 +241,7 @@ def comment_posting():
 @app.route("/get_posts", methods=['GET'])
 def get_posts():
     token_receive = request.cookies.get('mytoken')
+
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         my_username = payload["id"]
@@ -255,20 +256,32 @@ def get_posts():
         else:
             page = 1
 
-        print(page)
-
         if username_receive == "":
-            posts = list(db.posts.find({}).sort("date", -1).limit(page_view_config).skip((page-1)*page_view_config))
+            posts = list(db.posts.find({}).sort("date", -1).limit(page_view_config).skip((page - 1) * page_view_config))
+            comments = list(db.comments.find({}, {'_id': False}))
+
         else:
-            posts = list(db.posts.find({"username": username_receive}).sort("date", -1).limit(page_view_config).skip((page-1)*page_view_config))
+            posts = list(db.posts.find({"username": username_receive}).sort("date", -1).limit(page_view_config).skip(
+                (page - 1) * page_view_config))
+            comments = list(db.comments.find({}, {'_id': False}))
+
         for post in posts:
+
             post["_id"] = str(post["_id"])
             post["count_heart"] = db.likes.count_documents({"post_id": post["_id"], "type": "heart"})
-            post["heart_by_me"] = bool(db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": my_username}))
+            post["heart_by_me"] = bool(
+                db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": my_username}))
 
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"]})
+        for comment in comments:
+            print(comment)
+
+
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"], "comments": comments})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+
+
+
 
 
 @app.route('/update_like', methods=['POST'])

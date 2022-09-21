@@ -9,240 +9,239 @@ function post() {
     form_data.append("img_file_give", file);
     console.log(comment, today, file, form_data);
 
-    $.ajax({
-        type: "POST",
-        url: "/posting",
-        data: form_data,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (response) {
-            $("#modal-post").removeClass("is-active");
-            window.location.reload();
-        },
-    });
+  $.ajax({
+    type: "POST",
+    url: "/posting",
+    data: form_data,
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function (response) {
+      $("#modal-post").removeClass("is-active");
+      window.location.reload();
+    },
+  });
 }
 
 function commentPost(index, id) {
-    let comment = $(`#comment-post${index}`).val();
-    console.log("comment-post ==>", comment);
-    let today = new Date().toISOString();
-    let form_data = new FormData();
-    form_data.append("comment_give", comment);
-    form_data.append("date_give", today);
-    form_data.append("id_give", id);
+  let comment = $(`#comment-post${index}`).val();
+  console.log("comment-post ==>", comment);
+  let today = new Date().toISOString();
+  let form_data = new FormData();
+  form_data.append("comment_give", comment);
+  form_data.append("date_give", today);
+  form_data.append("id_give", id);
 
-    console.log(comment, today, form_data, id);
-    console.log("id ===>", typeof id);
-    $.ajax({
-        type: "POST",
-        url: "/posting/comment",
-        data: form_data,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (response) {
-            console.log("response ===>", response);
-            // window.location.reload()
-        },
-    });
+  console.log(comment, today, form_data, id);
+  console.log("id ===>", typeof id);
+  $.ajax({
+    type: "POST",
+    url: "/posting/comment",
+    data: form_data,
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function (response) {
+      console.log("response ===>", response);
+      // window.location.reload()
+    },
+  });
 }
 
 function get_posts(username, page) {
-    if (username === undefined) {
-        username = ""
-    }
-    if (page === undefined) {
-        page = 1
-    }
-    $("#post-box").empty()
-    $.ajax({
-        type: "GET",
-        url: `/get_posts?username_give=${username}&page=${page}`,
-        data: {},
-        success: function (response) {
-            if (response["result"] === "success") {
-                let posts = response["posts"]
-                for (let i = 0; i < posts.length; i++) {
-                    let post = posts[i]
-                    let time_post = new Date(post["date"])
-                    let time_before = time2str(time_post)
-                    let class_heart = post['heart_by_me'] ? "fa-heart" : "fa-heart-o"
+  if (username === undefined) {
+    username = "";
+  }
+  if (page === undefined) {
+    page = 1;
+  }
 
-                    // 포스팅 사진
-                    let html_temp = ``;
-                    let postfile_pic_real = "";
-                    if (!post["postfile_pic_real"] == "") {
-                        postfile_pic_real = post["postfile_pic_real"];
+  $("#post-box").empty();
+  $.ajax({
+    type: "GET",
+    url: `/get_posts?username_give=${username}&page=${page}`,
+    data: {},
+    success: function (response) {
+      if (response["result"] === "success") {
+        let posts = response["posts"];
+        let comments = response.comments;
 
-                        html_temp = ` <div class="box" id="${post["_id"]}">
-          <div class="post-image-box">
-            <img src="/static/${post["postfile_pic_real"]}" />
-          </div>
-          <article class="media">
-            <div class="media-left">
-              <a class="image is-64x64" href="/user/${post["username"]}">
-                <img
-                  class="is-rounded"
-                  src="/static/${post["profile_pic_real"]}"
-                  alt="Image"
-                />
-              </a>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong>${post["profile_name"]}</strong>
-                  <small>@${
-                            post["username"]
-                        }</small> <small>${time_before}</small>
-                  <br />
-                  ${post["comment"]}
-                </p>
-              </div>
-              <nav class="level is-mobile">
-                <div class="level-left">
-                  <a
-                    class="level-item is-sparta"
-                    aria-label="heart"
-                    onclick="toggle_like('${post["_id"]}', 'heart')"
-                  >
-                    <span class="icon is-small"
-                      ><i class="fa ${class_heart}" aria-hidden="true"></i></span
-                    >&nbsp;<span class="like-num"
-                      >${num2str(post["count_heart"])}</span
-                    >
-                  </a>
-                  <button onclick='$("#comment-area${i}").toggleClass("active")'>댓글</button>
-                </div>
-              </nav>
-            </div>
-          </article>
-          
-          
-          
-           <!-- 댓글 클릭시 -->
-           <div class="comment-area" id="comment-area${i}">
-                <div class="content comment-area__content">
-                <p>
-                  <strong>${post["profile_name"]}</strong>
-                  <small>@${
-                            post["username"]
-                        }</small> <small>${time_before}</small>
-                  <br />
-                  ${post["comment"]}
-                </p>
-              </div>            
-           </div>
-          
-          
-          
-          
-          
-          <div class="media-content comment-content">
-            <div class="field">
-              <p class="control">
-                <textarea
-                  id="comment-post${i}"
-                  class="textarea comment-input"
-                  placeholder="칭찬 댓글을 남겨주세요!"
-                ></textarea>
-              </p>
-              <nav class="level is-mobile">
-                <div class="level-left"></div>
-                <div class="level-right">
-                  <div class="level-item">
-                    <a class="button is-sparta" onclick="commentPost(${i}, '${
-                            post["_id"]
-                        }')">댓글 등록</a>
-                  </div>
-                </div>
-              </nav>
-            </div>
-          </div>`;
-                    } else {
-                        html_temp = ` <div class="box" id="${post["_id"]}">
-          <div class="post-image-box">
-            <img src="/static/${post["postfile_pic_real"]}" />
-          </div>
-          <article class="media">
-            <div class="media-left">
-              <a class="image is-64x64" href="/user/${post["username"]}">
-                <img
-                  class="is-rounded"
-                  src="/static/${post["profile_pic_real"]}"
-                  alt="Image"
-                />
-              </a>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong>${post["profile_name"]}</strong>
-                  <small>@${
-                            post["username"]
-                        }</small> <small>${time_before}</small>
-                  <br />
-                  ${post["comment"]}
-                </p>
-              </div>
-              <nav class="level is-mobile">
-                <div class="level-left">
-                  <a
-                    class="level-item is-sparta"
-                    aria-label="heart"
-                    onclick="toggle_like('${post["_id"]}', 'heart')"
-                  >
-                    <span class="icon is-small"
-                      ><i class="fa ${class_heart}" aria-hidden="true"></i></span
-                    >&nbsp;<span class="like-num"
-                      >${num2str(post["count_heart"])}</span
-                    >
-                  </a>
-                <button onclick='$("#comment-area${i}").toggleClass("active")'>댓글</button>
-                </div>
-              </nav>
-            </div>
-          </article>
-          
-     <!-- 댓글 클릭시 -->
-           <div class="comment-area" id="comment-area${i}">
-                <div class="content comment-area__content">
-                <p>
-                  <strong>${post["profile_name"]}</strong>
-                  <small>@${
-                            post["username"]
-                        }</small> <small>${time_before}</small>
-                  <br />
-                  ${post["comment"]}
-                </p>
-              </div>            
-           </div>
-          
-          
-          
-          <div class="media-content comment-content">
-            <div class="field">
-              <p class="control">
-                <textarea
-                  id="comment-post${i}"
-                  class="textarea comment-input"
-                  placeholder="칭찬 댓글을 남겨주세요!"
-                ></textarea>
-              </p>
-              <nav class="level is-mobile">
-                <div class="level-left"></div>
-                <div class="level-right">
-                  <div class="level-item">
-                    <a class="button is-sparta" onclick="commentPost(${i}, '${
-                            post["_id"]
-                        }')">댓글 등록</a>
-                  </div>
-                </div>
-              </nav>
-            </div>
-          </div>`;
-                    }
+        for (let i = 0; i < posts.length; i++) {
+          let post = posts[i];
+          let time_post = new Date(post["date"]);
+          let time_before = time2str(time_post);
+          let class_heart = post["heart_by_me"] ? "fa-heart" : "fa-heart-o";
+          let comment_temp = ``;
+
+          for (let j = 0; j < comments.length; j++) {
+            let comment = comments[j];
+            let time_comment = new Date(comment["date"]);
+            let time_before = time2str(time_comment);
+
+            if (post._id === comment.post_id) {
+              comment_temp += `
+                         <div class="content comment-area__content">
+                              <img class="comment-area__profile-image" src="./static/${comment.profile_pic_real}" alt="profile image">
+                              <h2 class="comment-area__user-name">${comment.profile_name}</h2>
+                              <p class="comment-area__comment">${comment.comment}</p>
+                              <dl>
+                              <dt class="sr-only">date</dt>
+                              <dd class="comment-area__date">${time_before}</dd>
+                              </dl>
+                          </div>
+                      `;
+            }
+          }
+
+          // 포스팅 사진
+          let html_temp = ``;
+          let postfile_pic_real = "";
+          if (!post["postfile_pic_real"] == "") {
+            postfile_pic_real = post["postfile_pic_real"];
+
+            html_temp = ` <div class="box" id="${post["_id"]}">
+<div class="post-image-box">
+  <img src="/static/${post["postfile_pic_real"]}" />
+</div>
+<article class="media">
+  <div class="media-left">
+    <a class="image is-64x64" href="/user/${post["username"]}">
+      <img
+        class="is-rounded"
+        src="/static/${post["profile_pic_real"]}"
+        alt="Image"
+      />
+    </a>
+  </div>
+  <div class="media-content">
+    <div class="content">
+      <p>
+        <strong>${post["profile_name"]}</strong>
+        <small>@${post["username"]}</small> <small>${time_before}</small>
+        <br />
+        ${post["comment"]}
+      </p>
+    </div>
+    <nav class="level is-mobile">
+      <div class="level-left">
+        <a
+          class="level-item is-sparta"
+          aria-label="heart"
+          onclick="toggle_like('${post["_id"]}', 'heart')"
+        >
+          <span class="icon is-small"
+            ><i class="fa ${class_heart}" aria-hidden="true"></i></span
+          >&nbsp;<span class="like-num"
+            >${num2str(post["count_heart"])}</span
+          >
+        </a>
+        <button onclick='$("#comment-area${i}").toggleClass("active")'>댓글</button>
+      </div>
+    </nav>
+  </div>
+</article>
+
+
+
+  <div class="comment-area" id="comment-area${i}">
+        ${comment_temp}   
+   </div>
+
+
+
+
+<div class="media-content comment-content">
+  <div class="field">
+    <p class="control">
+      <textarea
+        id="comment-post${i}"
+        class="textarea comment-input"
+        placeholder="칭찬 댓글을 남겨주세요!"
+      ></textarea>
+    </p>
+    <nav class="level is-mobile">
+      <div class="level-left"></div>
+      <div class="level-right">
+        <div class="level-item">
+          <a class="button is-sparta" onclick="commentPost(${i}, '${
+              post["_id"]
+            }')">댓글 등록</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>`;
+          } else {
+            html_temp = ` <div class="box" id="${post["_id"]}">
+<div class="post-image-box">
+  <img src="/static/${post["postfile_pic_real"]}" />
+</div>
+<article class="media">
+  <div class="media-left">
+    <a class="image is-64x64" href="/user/${post["username"]}">
+      <img
+        class="is-rounded"
+        src="/static/${post["profile_pic_real"]}"
+        alt="Image"
+      />
+    </a>
+  </div>
+  <div class="media-content">
+    <div class="content">
+      <p>
+        <strong>${post["profile_name"]}</strong>
+        <small>@${post["username"]}</small> <small>${time_before}</small>
+        <br />
+        ${post["comment"]}
+      </p>
+    </div>
+    <nav class="level is-mobile">
+      <div class="level-left">
+        <a
+          class="level-item is-sparta"
+          aria-label="heart"
+          onclick="toggle_like('${post["_id"]}', 'heart')"
+        >
+          <span class="icon is-small"
+            ><i class="fa ${class_heart}" aria-hidden="true"></i></span
+          >&nbsp;<span class="like-num"
+            >${num2str(post["count_heart"])}</span
+          >
+        </a>
+      <button onclick='$("#comment-area${i}").toggleClass("active")'>댓글</button>
+      </div>
+    </nav>
+  </div>
+</article>
+
+<!-- 댓글 클릭시 -->
+  <div class="comment-area active" id="comment-area${i}">
+        ${comment_temp}   
+   </div>
+
+
+<div class="media-content comment-content">
+  <div class="field">
+    <p class="control">
+      <textarea
+        id="comment-post${i}"
+        class="textarea comment-input"
+        placeholder="칭찬 댓글을 남겨주세요!"
+      ></textarea>
+    </p>
+    <nav class="level is-mobile">
+      <div class="level-left"></div>
+      <div class="level-right">
+        <div class="level-item">
+          <a class="button is-sparta" onclick="commentPost(${i}, '${
+              post["_id"]
+            }')">댓글 등록</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>`;
+          }
 
                     $("#post-box").append(html_temp);
                 }
