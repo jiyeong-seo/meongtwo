@@ -7,7 +7,6 @@ function post() {
     form_data.append("comment_give", comment);
     form_data.append("date_give", today);
     form_data.append("img_file_give", file);
-    console.log(comment, today, file, form_data);
 
   $.ajax({
     type: "POST",
@@ -43,7 +42,7 @@ function commentPost(index, id) {
     processData: false,
     success: function (response) {
       console.log("response ===>", response);
-      // window.location.reload()
+      window.location.reload()
     },
   });
 }
@@ -77,11 +76,12 @@ function get_posts(username, page) {
             let comment = comments[j];
             let time_comment = new Date(comment["date"]);
             let time_before = time2str(time_comment);
+            let comment_pic = comments[j]['profile_pic_real']
 
             if (post._id === comment.post_id) {
               comment_temp += `
                          <div class="content comment-area__content">
-                              <img class="comment-area__profile-image" src="./static/${comment.profile_pic_real}" alt="profile image">
+                              <img class="comment-area__profile-image" src="../static/${comment_pic}" alt="profile image">
                               <h2 class="comment-area__user-name">${comment.profile_name}</h2>
                               <p class="comment-area__comment">${comment.comment}</p>
                               <dl>
@@ -101,6 +101,7 @@ function get_posts(username, page) {
 
             html_temp = ` <div class="box" id="${post["_id"]}">
 <div class="post-image-box">
+  <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
   <img src="/static/${post["postfile_pic_real"]}" />
 </div>
 <article class="media">
@@ -174,6 +175,7 @@ function get_posts(username, page) {
           } else {
             html_temp = ` <div class="box" id="${post["_id"]}">
 <div class="post-image-box">
+  <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
   <img src="/static/${post["postfile_pic_real"]}" />
 </div>
 <article class="media">
@@ -328,4 +330,23 @@ function give_me_my_file(value) {
     let path_array = value.split("\\", 3);
     let file_name = path_array[2];
     $(".file-name").text(file_name);
+}
+
+
+function delete_post(id) {
+
+    let post_id = id
+
+    $.ajax({
+        type: "POST",
+        url: "/del_post",
+        data: {
+            post_id_give: post_id
+        },
+        success: function (response) {
+            alert(response["msg"])
+            window.location.reload();
+        },
+    });
+
 }
