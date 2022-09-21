@@ -65,6 +65,13 @@ function get_posts(username, page) {
             if (response["result"] === "success") {
                 let posts = response["posts"];
                 let comments = response.comments;
+                let likes_test = response.likes;
+                console.log(likes_test)
+
+                console.log(likes_test[0]['post_id'])
+
+
+
 
                 for (let i = 0; i < posts.length; i++) {
                     let post = posts[i];
@@ -74,15 +81,32 @@ function get_posts(username, page) {
                     let comment_temp = ``;
                     let commentCounts = 0;
 
+                    let likes_temp = ``;
+                    for (let z = 0; z<likes_test.length;z++){
+
+                         if (likes_test[z]['post_id'] === post._id)
+                         {
+                              let likes_user = likes_test[z]['username'];
+
+                              console.log(likes_user)
+                               likes_temp += `<div> ${likes_user}</div>`
+
+                         }
+
+                  }
+
+
+
+
                     for (let j = 0; j < comments.length; j++) {
                         let comment = comments[j];
+
                         let time_comment = new Date(comment["date"]);
                         let time_before = time2str(time_comment);
 
-
                         if (post._id === comment.post_id) {
-                            commentCounts += 1;
 
+                            commentCounts += 1;
                             comment_temp += `
                          <div class="content comment-area__content">
                               <img class="comment-area__profile-image" src="./static/${comment.profile_pic_real}" alt="profile image">
@@ -96,6 +120,12 @@ function get_posts(username, page) {
                       `;
                         }
                     }
+
+                    // for문
+
+
+
+
 
                     // 포스팅 사진
                     let html_temp = ``;
@@ -144,11 +174,37 @@ function get_posts(username, page) {
           <dl>
         <dt class="sr-only">댓글 수</dt>
         <dd>${commentCounts}</dd>
+        
         </dl>
+        <button class="like_lists-button" onclick='$("#modal-like_lists").addClass("is-active")'>like_lists</button>
       </div>
     </nav>
   </div>
 </article>
+    <div class="modal" id="modal-like_lists">
+        <div class="modal-background" onclick='$("#modal-like_lists").removeClass("is-active")'></div>
+        <div class="modal-content">
+            <div class="box">
+                <article class="media">
+                    <div class="media-content">
+                        
+                             ${likes_temp}
+                        
+                        </div>
+                                <div class="level-item">
+                                    <a class="button is-sparta is-outlined"
+                                       onclick='$("#modal-like_lists").removeClass("is-active")'>취소</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </article>
+            </div>
+
+        <button class="modal-close is-large" aria-label="close"
+                onclick='$("#modal-like_lists").removeClass("is-active")'></button>
+    </div>
+
 
 
 
@@ -213,7 +269,7 @@ function get_posts(username, page) {
           onclick="toggle_like('${post["_id"]}', 'heart')"
         >
           <span class="icon is-small"
-            ><i class="fa ${class_heart}" aria-hidden="true"></i></span
+            ><i class="fa ${class_heart} " aria-hidden="true"></i></span
           >&nbsp;<span class="like-num"
             >${num2str(post["count_heart"])}</span
           >
@@ -223,10 +279,31 @@ function get_posts(username, page) {
         <dt class="sr-only">댓글 수</dt>
         <dd>${commentCounts}</dd>
 </dl>
+<button class="like_lists-button" onclick='$("#modal-like_lists").addClass("is-active")'>like_lists</button>
       </div>
     </nav>
   </div>
 </article>
+    <div class="modal" id="modal-like_lists">
+        <div class="modal-background" onclick='$("#modal-like_lists").removeClass("is-active")'></div>
+        <div class="modal-content">
+            <div class="box">
+                <article class="media">
+                    <div class="media-content">
+                        
+                            ${likes_temp}
+                        </div>
+                                <div class="level-item">
+                                    <a class="button is-sparta is-outlined"
+                                       onclick='$("#modal-like_lists").removeClass("is-active")'>취소</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </article>
+            </div>
+        </div>
+
   <div class="comment-area" id="comment-area${i}">
         ${comment_temp}   
    </div>
@@ -360,3 +437,4 @@ function delete_post(id) {
     });
 
 }
+

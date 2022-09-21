@@ -255,11 +255,13 @@ def get_posts():
         if username_receive == "":
             posts = list(db.posts.find({}).sort("date", -1).limit(page_view_config).skip((page - 1) * page_view_config))
             comments = list(db.comments.find({}, {'_id': False}))
+            likes = list(db.likes.find({}, {'_id': False}))
 
         else:
             posts = list(db.posts.find({"username": username_receive}).sort("date", -1).limit(page_view_config).skip(
                 (page - 1) * page_view_config))
             comments = list(db.comments.find({}, {'_id': False}))
+            likes = list(db.likes.find({}, {'_id': False}))
 
         for post in posts:
 
@@ -268,7 +270,7 @@ def get_posts():
             post["heart_by_me"] = bool(
                 db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": my_username}))
 
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"], "comments": comments})
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"], "comments": comments, "likes":likes})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -293,7 +295,7 @@ def update_like():
         else:
             db.likes.delete_one(doc)
         count = db.likes.count_documents({"post_id": post_id_receive, "type": type_receive})
-        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+        return jsonify({"result": "success", 'msg': 'updated', "count": count })
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
