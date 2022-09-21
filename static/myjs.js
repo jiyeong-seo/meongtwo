@@ -81,7 +81,7 @@ function get_posts(username, page) {
             if (post._id === comment.post_id) {
               comment_temp += `
                          <div class="content comment-area__content">
-                              <img class="comment-area__profile-image" src="../static/${comment.profile_pic_real}" alt="profile image">
+                              <img class="comment-area__profile-image" src="./static/${comment.profile_pic_real}" alt="profile image">
                               <h2 class="comment-area__user-name">${comment.profile_name}</h2>
                               <p class="comment-area__comment">${comment.comment}</p>
                               <dl>
@@ -101,6 +101,7 @@ function get_posts(username, page) {
 
             html_temp = ` <div class="box post-box" id="${post["_id"]}">
 <div class="post-image-box">
+  <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
   <img src="/static/${post["postfile_pic_real"]}" />
 </div>
 <article class="media">
@@ -140,9 +141,16 @@ function get_posts(username, page) {
     </nav>
   </div>
 </article>
+
+
+
   <div class="comment-area" id="comment-area${i}">
         ${comment_temp}   
    </div>
+
+
+
+
 <div class="media-content comment-content">
   <div class="field">
     <p class="control">
@@ -167,6 +175,7 @@ function get_posts(username, page) {
           } else {
             html_temp = ` <div class="box post-box" id="${post["_id"]}">
 <div class="post-image-box">
+  <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
   <img src="/static/${post["postfile_pic_real"]}" />
 </div>
 <article class="media">
@@ -209,6 +218,8 @@ function get_posts(username, page) {
   <div class="comment-area" id="comment-area${i}">
         ${comment_temp}   
    </div>
+
+
 <div class="media-content comment-content">
   <div class="field">
     <p class="control">
@@ -317,4 +328,23 @@ function give_me_my_file(value) {
     let path_array = value.split("\\", 3);
     let file_name = path_array[2];
     $(".file-name").text(file_name);
+}
+
+
+function delete_post(id) {
+
+    let post_id = id
+
+    $.ajax({
+        type: "POST",
+        url: "/del_post",
+        data: {
+            post_id_give: post_id
+        },
+        success: function (response) {
+            alert(response["msg"])
+            window.location.reload();
+        },
+    });
+
 }
