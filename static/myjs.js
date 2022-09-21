@@ -66,6 +66,7 @@ function get_posts(username, page) {
         let posts = response["posts"];
         let comments = response.comments;
         let likes_test = response.likes;
+        console.log(likes_test)
 
         for (let i = 0; i < posts.length; i++) {
           let post = posts[i];
