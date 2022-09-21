@@ -7,7 +7,6 @@ function post() {
     form_data.append("comment_give", comment);
     form_data.append("date_give", today);
     form_data.append("img_file_give", file);
-    console.log(comment, today, file, form_data);
 
   $.ajax({
     type: "POST",
