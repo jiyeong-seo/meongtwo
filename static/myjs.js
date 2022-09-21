@@ -75,6 +75,7 @@ function get_posts(username, page) {
                     let class_heart = post["heart_by_me"] ? "fa-heart" : "fa-heart-o";
                     let comment_temp = ``;
                     let commentCounts = 0;
+                    let comment_temp_test =`이 좋아요를 누르셨습니다.`;
 
                     let likes_temp = '';
                     for (let z = 0; z < likes_test.length; z++) {
@@ -86,7 +87,7 @@ function get_posts(username, page) {
                             console.log(likes_test[z]);
 
 
-                            likes_temp+=`<span class="comment-like-user">${likes_user}님 </span>`;
+                            likes_temp+=`<span class="comment-like-user">${likes_user}님</span>`;
 
 
 
@@ -95,7 +96,7 @@ function get_posts(username, page) {
 
                     }
 
-                    likes_temp=likes_temp+likes_test;
+                    likes_temp=likes_temp+comment_temp_test;
 
 
 
