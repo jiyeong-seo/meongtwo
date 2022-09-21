@@ -25,7 +25,7 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
+    <script src="{{ url_for('static', filename='myjs.js') }}"></script>
 
     <style>
 
@@ -200,8 +200,8 @@
 <body>
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-            <img src="{{ url_for('static', filename='logo.png') }}">
+        <a class="navbar-item-content" href="/">
+            <img id="header-logo" src="{{ url_for('static', filename='logo.png') }}" onmouseover="onHover();" onmouseout="offHover();" >
             <strong class="is-sparta navbar-title"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;">멍슐랭</strong>
         </a>
@@ -209,7 +209,7 @@
 </nav>
 <section class="section login-section">
     <div class="container">
-        <div class="box login-content" >
+        <div class="box login-content">
             <article class="media">
                 <div class="media-content">
                     <div class="content">

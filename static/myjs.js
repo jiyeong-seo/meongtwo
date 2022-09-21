@@ -66,9 +66,6 @@ function get_posts(username, page) {
                 let posts = response["posts"];
                 let comments = response.comments;
                 let likes_test = response.likes;
-                console.log(likes_test)
-
-                console.log(likes_test[0]['post_id'])
 
 
 
@@ -88,7 +85,7 @@ function get_posts(username, page) {
                          {
                               let likes_user = likes_test[z]['username'];
 
-                              console.log(likes_user)
+
                                likes_temp += `<div> ${likes_user}</div>`
 
                          }
@@ -100,16 +97,16 @@ function get_posts(username, page) {
 
                     for (let j = 0; j < comments.length; j++) {
                         let comment = comments[j];
-
                         let time_comment = new Date(comment["date"]);
                         let time_before = time2str(time_comment);
 
-                        if (post._id === comment.post_id) {
 
+                        if (post._id === comment.post_id) {
                             commentCounts += 1;
+
                             comment_temp += `
                          <div class="content comment-area__content">
-                              <img class="comment-area__profile-image" src="./static/${comment.profile_pic_real}" alt="profile image">
+                              <img class="comment-area__profile-image" src="/static/${comment.profile_pic_real}" alt="profile image">
                               <h2 class="comment-area__user-name">${comment.profile_name}</h2>
                               <p class="comment-area__comment">${comment.comment}</p>
                               <dl>
@@ -121,12 +118,6 @@ function get_posts(username, page) {
                         }
                     }
 
-                    // for문
-
-
-
-
-
                     // 포스팅 사진
                     let html_temp = ``;
                     let postfile_pic_real = "";
@@ -134,11 +125,11 @@ function get_posts(username, page) {
                         postfile_pic_real = post["postfile_pic_real"];
 
                         html_temp = ` <div class="box post-box" id="${post["_id"]}">
-<div class="post-image-box">
-  <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
-  <img src="/static/${post["postfile_pic_real"]}" />
+<div class="post-image-box delete-post-content">
+  <div class="delete-post" onclick="delete_post('${post["_id"]}')"></div>
 </div>
-<article class="media">
+  <img src="/static/${post["postfile_pic_real"]}" />
+<article class="media post-media">
   <div class="media-left">
     <a class="image is-64x64" href="/user/${post["username"]}">
       <img
@@ -151,10 +142,10 @@ function get_posts(username, page) {
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>${post["profile_name"]}</strong>
-        <small>@${post["username"]}</small> <small>${time_before}</small>
+        <strong class="post-content__name">${post["profile_name"]}</strong>
+        <small class="post-content__username">@${post["username"]}</small> <small class="post-content__time">${time_before}</small>
         <br />
-        ${post["comment"]}
+        <p class="post-content__comment">${post["comment"]}</p>
       </p>
     </div>
     <nav class="level is-mobile">
@@ -173,8 +164,7 @@ function get_posts(username, page) {
         <button class="comment-button" onclick='$("#comment-area${i}").toggleClass("active")'></button>
           <dl>
         <dt class="sr-only">댓글 수</dt>
-        <dd>${commentCounts}</dd>
-        
+        <dd class="commnet-count">${commentCounts}</dd>
         </dl>
         <button class="like_lists-button" onclick='$("#modal-like_lists").addClass("is-active")'>like_lists</button>
       </div>
@@ -238,11 +228,11 @@ function get_posts(username, page) {
 </div>`;
                     } else {
                         html_temp = ` <div class="box post-box" id="${post["_id"]}">
-<div class="post-image-box">
-  <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
-
+<div class="post-image-box delete-post-content">
+  <div class="delete-post" onclick="delete_post('${post["_id"]}')"></div>
 </div>
-<article class="media">
+
+<article class="media post-media">
   <div class="media-left">
     <a class="image is-64x64" href="/user/${post["username"]}">
       <img
@@ -255,10 +245,10 @@ function get_posts(username, page) {
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>${post["profile_name"]}</strong>
-        <small>@${post["username"]}</small> <small>${time_before}</small>
+        <strong class="post-content__name">${post["profile_name"]}</strong>
+        <small class="post-content__username">@${post["username"]}</small> <small class="post-content__time">${time_before}</small>
         <br />
-        ${post["comment"]}
+        <p class="post-content__comment">${post["comment"]}</p>
       </p>
     </div>
     <nav class="level is-mobile">
@@ -277,7 +267,7 @@ function get_posts(username, page) {
       <button class="comment-button"  onclick='$("#comment-area${i}").toggleClass("active")'></button>
       <dl>
         <dt class="sr-only">댓글 수</dt>
-        <dd>${commentCounts}</dd>
+        <dd class="commnet-count">${commentCounts}</dd>
 </dl>
 <button class="like_lists-button" onclick='$("#modal-like_lists").addClass("is-active")'>like_lists</button>
       </div>
@@ -431,10 +421,17 @@ function delete_post(id) {
             post_id_give: post_id
         },
         success: function (response) {
-            alert(response["msg"])
+            alert(response['msg']);
             window.location.reload();
         },
     });
 
 }
 
+function onHover() {
+    $("#header-logo").attr('src', '../static/logo_hover.png');
+}
+
+function offHover() {
+    $("#header-logo").attr('src', '../static/logo.png');
+}

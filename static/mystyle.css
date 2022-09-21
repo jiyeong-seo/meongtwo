@@ -16,7 +16,7 @@ body {
 }
 
 .input:focus {
-        outline: none !important;
+    outline: none !important;
 }
 
 .input.login-input {
@@ -37,6 +37,7 @@ body {
     border: none;
     outline-color: #9ecefc;
     resize: none;
+    height: 200px;
 }
 
 .is-sparta {
@@ -56,8 +57,12 @@ body {
 }
 
 .modal-content {
-    width: 600px;
     max-width: 80%;
+
+}
+
+.modal-content > .box {
+    height: 400px;
 }
 
 input::-webkit-calendar-picker-indicator {
@@ -85,7 +90,7 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .navbar.is-fixed-top {
-    height: 140px;
+    height: 150px;
 
 }
 
@@ -102,17 +107,18 @@ body.has-navbar-fixed-top,
 
 }
 
-.navbar-item {
+.navbar-item-content {
     display: flex;
     flex-direction: column;
 }
 
-.navbar-item img {
-    max-height: 4.5rem;
+.navbar-item-content img {
+    max-height: 5.5rem;
 }
 
 .navbar-title {
-    font-size: 25px !important;
+    font-size: 28px !important;
+    text-align: center;
 }
 
 .comment-content {
@@ -120,15 +126,16 @@ body.has-navbar-fixed-top,
 }
 
 .comment-input {
+    height: 70px;
     margin-bottom: 20px;
     border-radius: 20px;
 }
 
 .main-image {
     width: 100vw;
-    height: 50vh;
+    height: 55vh;
     position: relative;
-    top: -60px;
+    top: -50px;
     background-image: url("../static/main.png");
     background-position: center center;
     background-size: 100%;
@@ -279,3 +286,70 @@ body.has-navbar-fixed-top,
     border-top-right-radius: 30px;
 }
 
+.post-image-box {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.delete-post {
+    width: 20px;
+    height: 20px;
+    background-image: url("https://cdn-icons-png.flaticon.com/512/151/151882.png");
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.delete-post:hover {
+    opacity: 0.9;
+}
+
+.post-content__name {
+    font-size: 26px;
+    margin: 2px 0 7px 0;
+}
+
+.post-content__username {
+    font-size: 17px;
+    color: #449bee;
+}
+
+.post-media {
+    position: relative;
+    margin-top: 20px;
+}
+
+.post-content__time {
+    position: absolute;
+    right: 10px;
+    top: 11px;
+    font-size: 17px;
+}
+
+.post-content__comment {
+    margin: 10px;
+    font-size: 18px;
+}
+
+.commnet-count {
+    margin-left: 3px;
+    color: #3f3f3f;
+}
+
+
+.field.has-addons .control:last-child:not(:only-child) .button, .field.has-addons .control:last-child:not(:only-child) .input, .field.has-addons .control:last-child:not(:only-child) .select select {
+    margin-left: 7px;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+}
+
+.button.is-sparta.is-outlined:hover {
+ opacity: 0.7;
+}
+
+.user-modal-content {
+    height: 495px !important;
+}
