@@ -90,7 +90,7 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .navbar.is-fixed-top {
-    height: 140px;
+    height: 150px;
 
 }
 
@@ -107,17 +107,18 @@ body.has-navbar-fixed-top,
 
 }
 
-.navbar-item {
+.navbar-item-content {
     display: flex;
     flex-direction: column;
 }
 
-.navbar-item img {
-    max-height: 4.5rem;
+.navbar-item-content img {
+    max-height: 5.5rem;
 }
 
 .navbar-title {
-    font-size: 25px !important;
+    font-size: 28px !important;
+    text-align: center;
 }
 
 .comment-content {

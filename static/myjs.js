@@ -360,3 +360,11 @@ function delete_post(id) {
     });
 
 }
+
+function onHover() {
+    $("#header-logo").attr('src', '../static/logo_hover.png');
+}
+
+function offHover() {
+    $("#header-logo").attr('src', '../static/logo.png');
+}

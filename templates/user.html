@@ -72,7 +72,7 @@
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img src="{{ url_for('static', filename='logo.png') }}">
+            <img id="header-logo" src="{{ url_for('static', filename='logo.png') }}" onmouseover="onHover();" onmouseout="offHover();" >
             <strong class="is-sparta"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;">멍슐랭</strong>
         </a>
