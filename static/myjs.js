@@ -68,8 +68,6 @@ function get_posts(username, page) {
                 let likes_test = response.likes;
 
 
-
-
                 for (let i = 0; i < posts.length; i++) {
                     let post = posts[i];
                     let time_post = new Date(post["date"]);
@@ -78,20 +76,26 @@ function get_posts(username, page) {
                     let comment_temp = ``;
                     let commentCounts = 0;
 
-                    let likes_temp = ``;
-                    for (let z = 0; z<likes_test.length;z++){
+                    let likes_temp = '';
+                    for (let z = 0; z < likes_test.length; z++) {
 
-                         if (likes_test[z]['post_id'] === post._id)
-                         {
-                              let likes_user = likes_test[z]['username'];
+                        if (likes_test[z]['post_id'] === post._id) {
 
 
-                               likes_temp += `<div> ${likes_user}</div>`
+                            let likes_user = likes_test[z]['username'];
+                            console.log(likes_test[z]);
 
-                         }
 
-                  }
+                            likes_temp+=`<span class="comment-like-user">${likes_user}님 </span>`;
 
+
+
+                        }
+
+
+                    }
+
+                    likes_temp=likes_temp+likes_test;
 
 
 
@@ -159,40 +163,26 @@ function get_posts(username, page) {
             ><i class="fa ${class_heart}" aria-hidden="true"></i></span
           >&nbsp;<span class="like-num"
             >${num2str(post["count_heart"])}</span
+
           >
         </a>
         <button class="comment-button" onclick='$("#comment-area${i}").toggleClass("active")'></button>
           <dl>
-        <dt class="sr-only">댓글 수</dt>
-        <dd class="commnet-count">${commentCounts}</dd>
+            <div>
+                <dt class="sr-only">댓글 수</dt>
+                <dd class="commnet-count">${commentCounts}</dd>
+            </div>
+                <div>
+                <dt class="sr-only">좋아요 한 사람</dt>
+                <dd>  ${likes_temp} </dd>
+                </div>
         </dl>
-        <button class="like_lists-button" onclick='$("#modal-like_lists").addClass("is-active")'>like_lists</button>
+       
       </div>
     </nav>
   </div>
 </article>
-    <div class="modal" id="modal-like_lists">
-        <div class="modal-background" onclick='$("#modal-like_lists").removeClass("is-active")'></div>
-        <div class="modal-content">
-            <div class="box">
-                <article class="media">
-                    <div class="media-content">
-                        
-                             ${likes_temp}
-                        
-                        </div>
-                                <div class="level-item">
-                                    <a class="button is-sparta is-outlined"
-                                       onclick='$("#modal-like_lists").removeClass("is-active")'>취소</a>
-                                </div>
-                            </div>
-                        </nav>
-                    </div>
-                </article>
-            </div>
 
-        <button class="modal-close is-large" aria-label="close"
-                onclick='$("#modal-like_lists").removeClass("is-active")'></button>
     </div>
 
 
@@ -266,32 +256,21 @@ function get_posts(username, page) {
         </a>
       <button class="comment-button"  onclick='$("#comment-area${i}").toggleClass("active")'></button>
       <dl>
-        <dt class="sr-only">댓글 수</dt>
-        <dd class="commnet-count">${commentCounts}</dd>
+<div>
+                <dt class="sr-only">댓글 수</dt>
+                <dd class="commnet-count">${commentCounts}</dd>
+            </div>
+                <div>
+                <dt class="sr-only">좋아요 한 사람</dt>
+                <dd>  ${likes_temp} </dd>
+                </div>
 </dl>
-<button class="like_lists-button" onclick='$("#modal-like_lists").addClass("is-active")'>like_lists</button>
+
       </div>
     </nav>
   </div>
 </article>
-    <div class="modal" id="modal-like_lists">
-        <div class="modal-background" onclick='$("#modal-like_lists").removeClass("is-active")'></div>
-        <div class="modal-content">
-            <div class="box">
-                <article class="media">
-                    <div class="media-content">
-                        
-                            ${likes_temp}
-                        </div>
-                                <div class="level-item">
-                                    <a class="button is-sparta is-outlined"
-                                       onclick='$("#modal-like_lists").removeClass("is-active")'>취소</a>
-                                </div>
-                            </div>
-                        </nav>
-                    </div>
-                </article>
-            </div>
+
         </div>
 
   <div class="comment-area" id="comment-area${i}">
