@@ -8,6 +8,7 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import certifi
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -139,7 +140,6 @@ def save_img():
 
             # 이미지 파일이 아닐 경우 리턴 한다
             extension_temp = extension.upper()
-            print(extension_temp)
             if extension_temp != "JPG" and extension_temp != "PNG" and extension_temp != "GIF" and extension_temp != "BMP":
                 return redirect(url_for("home"))
 
@@ -148,7 +148,7 @@ def save_img():
             file.save("./static/" + file_path)
             new_doc["profile_pic"] = receive_filename
             new_doc["profile_pic_real"] = file_path
-            
+
         # DB 등록
         db.users.update_one({'username': payload['id']}, {'$set': new_doc})
         return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
@@ -165,7 +165,6 @@ def posting():
         user_info = db.users.find_one({"username": payload["id"]})
         comment_receive = request.form["comment_give"]
         date_receive = request.form["date_give"]
-        print(type(date_receive))
         doc = {
             "username": user_info["username"],
             "profile_name": user_info["profile_name"],
@@ -221,8 +220,6 @@ def comment_posting():
         date_receive = request.form["date_give"]
         postid_receive = request.form["id_give"]
 
-        print(postid_receive)
-
         doc = {
             "username": user_info["username"],
             "profile_name": user_info["profile_name"],
@@ -272,16 +269,9 @@ def get_posts():
             post["heart_by_me"] = bool(
                 db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": my_username}))
 
-        for comment in comments:
-            print(comment)
-
-
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"], "comments": comments})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
-
-
 
 
 @app.route('/update_like', methods=['POST'])
@@ -304,10 +294,35 @@ def update_like():
         else:
             db.likes.delete_one(doc)
         count = db.likes.count_documents({"post_id": post_id_receive, "type": type_receive})
-        print(count)
         return jsonify({"result": "success", 'msg': 'updated', "count": count})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+
+
+@app.route('/del_post', methods=['POST'])
+def delete_post():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        post_id_receive = request.form["post_id_give"]
+        post_db_receive = db.posts.find_one({'_id': ObjectId(post_id_receive)})
+
+        # 포스팅한 유저와 현재 삭제 하려는 유저가 같다면 포스트+코멘트 삭제 하고 데이터 넘겨 주기
+        if payload["id"] == post_db_receive['username']:
+            db.comments.delete_many({"post_id": post_id_receive})
+            db.posts.delete_one({'_id': ObjectId(post_id_receive)})
+            return jsonify({"result": "success", 'msg': '성공'})
+        else:
+            return jsonify({"result": "fail", 'msg': '실패'})
+
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+
+@app.route('/del_comment', methods=['POST'])
+def delete_comment():
+
+    return redirect(url_for("home"))
 
 
 if __name__ == '__main__':
