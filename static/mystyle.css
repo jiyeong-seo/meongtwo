@@ -54,20 +54,6 @@ input::-webkit-calendar-picker-indicator {
     color: orangered;
 }
 
-/*.post-image-box {*/
-/*    margin-bottom: 20px;*/
-/*}*/
-
-/*.white-font-a {*/
-/*    color:white;*/
-/*}*/
-
-/*.pager-btn {*/
-/*     display:inline-block;*/
-/*    float:left;*/
-/*    margin:0px 5px 0px 5px;*/
-/*}*/
-
 .navbar.is-fixed-top {
     height: 140px;
 
@@ -133,11 +119,38 @@ body.has-navbar-fixed-top,
 }
 
 .comment-area {
-    margin: 20px;
+    margin: 30px 10px 0 10px;
     display: none !important;
 }
 
 .comment-area__content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.comment-area__profile-image {
+    width: 55px;
+}
+
+.comment-area__user-name {
+    font-size: 19px !important;
+    position: relative;
+    top: -30px;
+    left: 11px;
+}
+
+.comment-area__comment {
+    font-size: 18px;
+    position: relative;
+    top: 15px;
+    left: -65px;
+}
+
+.comment-area__date {
+    position: relative;
+    right: -370px;
+    font-size: 14px;
 }
 
 .active {

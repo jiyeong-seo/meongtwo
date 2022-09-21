@@ -81,17 +81,15 @@ function get_posts(username, page) {
             if (post._id === comment.post_id) {
               comment_temp += `
                          <div class="content comment-area__content">
-                              <img src="./static/${comment.profile_pic_real}" alt="profile image">
-                              <h2>${comment.profile_name}</h2>
-                              <p>${comment.comment}</p>
+                              <img class="comment-area__profile-image" src="./static/${comment.profile_pic_real}" alt="profile image">
+                              <h2 class="comment-area__user-name">${comment.profile_name}</h2>
+                              <p class="comment-area__comment">${comment.comment}</p>
                               <dl>
-                              <dt>date</dt>
-                              <dd>${time_before}</dd>
+                              <dt class="sr-only">date</dt>
+                              <dd class="comment-area__date">${time_before}</dd>
                               </dl>
                           </div>
                       `;
-
-              console.log("comment_list ===>", comment);
             }
           }
 
@@ -217,7 +215,7 @@ function get_posts(username, page) {
 </article>
 
 <!-- 댓글 클릭시 -->
-  <div class="comment-area" id="comment-area${i}">
+  <div class="comment-area active" id="comment-area${i}">
         ${comment_temp}   
    </div>
 
