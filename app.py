@@ -62,7 +62,11 @@ def user(username):
         user_info = db.users.find_one({"username": username}, {"_id": False})
 
         # 페이저 프로필용 카운트
-        post_count = int((db.posts.count_documents({"username": username}) / page_view_config) + 1)
+        post_count = int(db.posts.count_documents({"username": username}))
+        if post_count % page_view_config == 0:
+            post_count = int((post_count / page_view_config))
+        elif post_count % page_view_config > 0:
+            post_count = int((post_count / page_view_config) + 1)
         return render_template('user.html', user_info=user_info, status=status, post_count=post_count)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
