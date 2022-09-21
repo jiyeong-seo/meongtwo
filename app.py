@@ -256,8 +256,6 @@ def get_posts():
         else:
             page = 1
 
-        # print(page)
-
         if username_receive == "":
             posts = list(db.posts.find({}).sort("date", -1).limit(page_view_config).skip((page - 1) * page_view_config))
             comments = list(db.comments.find({}, {'_id': False}))

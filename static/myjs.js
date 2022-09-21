@@ -81,7 +81,7 @@ function get_posts(username, page) {
             if (post._id === comment.post_id) {
               comment_temp += `
                          <div class="content comment-area__content">
-                              <img src="./static/${comment.profile_pic_real}" alt="">
+                              <img src="./static/${comment.profile_pic_real}" alt="profile image">
                               <h2>${comment.profile_name}</h2>
                               <p>${comment.comment}</p>
                               <dl>
