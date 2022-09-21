@@ -314,7 +314,7 @@ body.has-navbar-fixed-top,
 
 .post-content__username {
     font-size: 17px;
-    color: #449bee;
+    color: #3195f5;
 }
 
 .post-media {
@@ -352,4 +352,12 @@ body.has-navbar-fixed-top,
 
 .user-modal-content {
     height: 495px !important;
+}
+
+
+.likes-list-content {
+    position: absolute;
+    top: 103px;
+    right: 20px;
+    color: #3195f5;
 }
