@@ -244,6 +244,9 @@ def get_posts():
         my_username = payload["id"]
         username_receive = request.args.get("username_give")
 
+        # 댓글 카운터
+        coment_count = db.coments.count_documents({"post_id": post_id_receive})
+
         # 페이저 기능
         # sort(기준 필드,디폴트 값은 정렬(ascending) -1은 역정렬(descending)), list(가져올 갯 수), skip(건너뛸 갯 수 offset)
         page_receive = request.args.get("page")
@@ -269,7 +272,7 @@ def get_posts():
             post["heart_by_me"] = bool(
                 db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": my_username}))
 
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"], "comments": comments})
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"], "comments": comments, "comentCount": coment_count})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -311,9 +314,9 @@ def delete_post():
         if payload["id"] == post_db_receive['username']:
             db.comments.delete_many({"post_id": post_id_receive})
             db.posts.delete_one({'_id': ObjectId(post_id_receive)})
-            return jsonify({"result": "success", 'msg': '성공'})
+            return jsonify({"result": "success", 'msg': '삭제가 완료되었습니다!'})
         else:
-            return jsonify({"result": "fail", 'msg': '실패'})
+            return jsonify({"result": "fail", 'msg': '삭제를 실패했습니다ㅠㅠ'})
 
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))

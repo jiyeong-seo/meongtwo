@@ -47,20 +47,20 @@
         </a>
     </div>
 </nav>
-<div class="main-image">
+    <div class="main-image">
     <strong style="">댕댕이들을 위한 수제 간식을 자랑 해봐요!</strong>
 </div>
-<section class="section">
+<section class="section post-input-section">
     <article class="media">
         <figure class="media-left" style="align-self: center">
-            <a class="image is-32x32" href="/user/{{ user_info.username }}">
+            <a class="image is-64x64" href="/user/{{ user_info.username }}">
                 <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
             </a>
         </figure>
         <div class="media-content">
             <div class="field">
                 <p class="control">
-                    <input id="input-post" class="input is-rounded" placeholder="나만의 멍멍이 간식을 공유해주세요"
+                    <input id="input-post" class="input is-rounded post-input" placeholder="나만의 멍멍이 간식을 공유해주세요"
                            onclick='$("#modal-post").addClass("is-active")'>
                 </p>
             </div>

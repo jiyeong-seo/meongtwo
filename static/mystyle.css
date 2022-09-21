@@ -1,12 +1,42 @@
 body {
-    background-color: #aaddff;
+    background-color: #c7e8ff;
     min-height: 100vh;
+    color: #3f3f3f;
 }
 
 .section {
     padding: 1rem 1.5rem;
     max-width: 750px;
     margin: auto;
+}
+
+.input {
+    border-radius: 30px;
+    height: 44px;
+}
+
+.input:focus {
+        outline: none !important;
+}
+
+.input.login-input {
+    border-radius: 30px;
+}
+
+.button {
+    border-radius: 30px;
+}
+
+.button.is-sparta:hover {
+    background-color: #7ebaf3;
+}
+
+
+.textarea {
+    border-radius: 15px;
+    border: none;
+    outline-color: #9ecefc;
+    resize: none;
 }
 
 .is-sparta {
@@ -91,66 +121,78 @@ body.has-navbar-fixed-top,
 
 .comment-input {
     margin-bottom: 20px;
+    border-radius: 20px;
 }
 
 .main-image {
     width: 100vw;
-    height: 600px;
+    height: 50vh;
     position: relative;
-    top: -30px;
+    top: -60px;
     background-image: url("../static/main.png");
     background-position: center center;
-    background-size: cover;
+    background-size: 100%;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-size 1000ms ease;
+}
+
+.main-image:hover {
+    background-size: 105%;
 }
 
 .user-profile {
     position: relative;
-    top: -30px;
+    top: -60px;
 }
 
 .main-image strong {
     font-family: 'Stylish', sans-serif;
     font-size: 51px;
-    color: #40f88e;
+    color: currentColor;
 }
 
 .comment-area {
+    height: 230px;
     margin: 30px 10px 0 10px;
     display: none !important;
+    overflow: scroll;
 }
 
 .comment-area__content {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    height: 100px;
+    position: relative;
 }
 
 .comment-area__profile-image {
     width: 55px;
+    border-radius: 50%;
 }
 
 .comment-area__user-name {
     font-size: 19px !important;
-    position: relative;
-    top: -30px;
-    left: 11px;
+    position: absolute;
+    left: 70px;
+    top: 5px;
 }
 
 .comment-area__comment {
     font-size: 18px;
-    position: relative;
-    top: 15px;
-    left: -65px;
+    position: absolute;
+    left: 73px;
+    top: 50px;
 }
 
 .comment-area__date {
-    position: relative;
-    right: -370px;
+    position: absolute;
     font-size: 14px;
+    right: 10px;
+    top: 30px;
 }
 
 .active {
@@ -178,5 +220,62 @@ body.has-navbar-fixed-top,
 
 .is-rounded {
     height: 70px;
+}
+
+.comment-button {
+    background-image: url("https://cdn-icons-png.flaticon.com/512/6521/6521781.png");
+    background-color: transparent;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 21px;
+    height: 21px;
+    border: 0;
+}
+
+.post-input {
+    border: none;
+    height: 100px;
+
+}
+
+.modal-background {
+    background-color: rgba(87, 86, 86, 0.6);
+}
+
+.box {
+    border-radius: 30px;
+    border: none;
+}
+
+.post-box {
+    transition: transform 1000ms;
+    margin-bottom: 40px !important;
+}
+
+.post-box:hover {
+    transform: translateY(-1%);
+}
+
+.post-input-section {
+    margin: -20px auto 20px auto;
+}
+
+.file-input > span {
+    border-radius: 20px;
+}
+
+.login-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 600px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.field.has-addons .control:first-child:not(:only-child) .button, .field.has-addons .control:first-child:not(:only-child) .input, .field.has-addons .control:first-child:not(:only-child) .select select {
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
 }
 
