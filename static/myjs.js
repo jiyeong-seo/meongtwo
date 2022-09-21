@@ -43,7 +43,7 @@ function commentPost(index, id) {
     processData: false,
     success: function (response) {
       console.log("response ===>", response);
-      // window.location.reload()
+      window.location.reload()
     },
   });
 }
@@ -81,7 +81,7 @@ function get_posts(username, page) {
             if (post._id === comment.post_id) {
               comment_temp += `
                          <div class="content comment-area__content">
-                              <img class="comment-area__profile-image" src="./static/${comment.profile_pic_real}" alt="profile image">
+                              <img class="comment-area__profile-image" src="../static/${comment.profile_pic_real}" alt="profile image">
                               <h2 class="comment-area__user-name">${comment.profile_name}</h2>
                               <p class="comment-area__comment">${comment.comment}</p>
                               <dl>
@@ -99,7 +99,7 @@ function get_posts(username, page) {
           if (!post["postfile_pic_real"] == "") {
             postfile_pic_real = post["postfile_pic_real"];
 
-            html_temp = ` <div class="box" id="${post["_id"]}">
+            html_temp = ` <div class="box post-box" id="${post["_id"]}">
 <div class="post-image-box">
   <img src="/static/${post["postfile_pic_real"]}" />
 </div>
@@ -135,21 +135,14 @@ function get_posts(username, page) {
             >${num2str(post["count_heart"])}</span
           >
         </a>
-        <button onclick='$("#comment-area${i}").toggleClass("active")'>댓글</button>
+        <button class="comment-button" onclick='$("#comment-area${i}").toggleClass("active")'></button>
       </div>
     </nav>
   </div>
 </article>
-
-
-
   <div class="comment-area" id="comment-area${i}">
         ${comment_temp}   
    </div>
-
-
-
-
 <div class="media-content comment-content">
   <div class="field">
     <p class="control">
@@ -163,7 +156,7 @@ function get_posts(username, page) {
       <div class="level-left"></div>
       <div class="level-right">
         <div class="level-item">
-          <a class="button is-sparta" onclick="commentPost(${i}, '${
+          <a class="button is-sparta post-button" onclick="commentPost(${i}, '${
               post["_id"]
             }')">댓글 등록</a>
         </div>
@@ -172,7 +165,7 @@ function get_posts(username, page) {
   </div>
 </div>`;
           } else {
-            html_temp = ` <div class="box" id="${post["_id"]}">
+            html_temp = ` <div class="box post-box" id="${post["_id"]}">
 <div class="post-image-box">
   <img src="/static/${post["postfile_pic_real"]}" />
 </div>
@@ -208,18 +201,14 @@ function get_posts(username, page) {
             >${num2str(post["count_heart"])}</span
           >
         </a>
-      <button onclick='$("#comment-area${i}").toggleClass("active")'>댓글</button>
+      <button class="comment-button"  onclick='$("#comment-area${i}").toggleClass("active")'></button>
       </div>
     </nav>
   </div>
 </article>
-
-<!-- 댓글 클릭시 -->
-  <div class="comment-area active" id="comment-area${i}">
+  <div class="comment-area" id="comment-area${i}">
         ${comment_temp}   
    </div>
-
-
 <div class="media-content comment-content">
   <div class="field">
     <p class="control">
@@ -233,7 +222,7 @@ function get_posts(username, page) {
       <div class="level-left"></div>
       <div class="level-right">
         <div class="level-item">
-          <a class="button is-sparta" onclick="commentPost(${i}, '${
+          <a class="button is-sparta post-button" onclick="commentPost(${i}, '${
               post["_id"]
             }')">댓글 등록</a>
         </div>
