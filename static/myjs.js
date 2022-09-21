@@ -85,7 +85,7 @@ function get_posts(username, page) {
 
                             comment_temp += `
                          <div class="content comment-area__content">
-                              <img class="comment-area__profile-image" src="./static/${comment.profile_pic_real}" alt="profile image">
+                              <img class="comment-area__profile-image" src="/static/${comment.profile_pic_real}" alt="profile image">
                               <h2 class="comment-area__user-name">${comment.profile_name}</h2>
                               <p class="comment-area__comment">${comment.comment}</p>
                               <dl>
