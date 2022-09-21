@@ -65,6 +65,8 @@ function get_posts(username, page) {
             if (response["result"] === "success") {
                 let posts = response["posts"];
                 let comments = response.comments;
+                let likes_test = response.likes;
+
 
                 for (let i = 0; i < posts.length; i++) {
                     let post = posts[i];
@@ -73,6 +75,30 @@ function get_posts(username, page) {
                     let class_heart = post["heart_by_me"] ? "fa-heart" : "fa-heart-o";
                     let comment_temp = ``;
                     let commentCounts = 0;
+                    let comment_temp_test =`이 좋아요를 누르셨습니다.`;
+
+                    let likes_temp = '';
+                    for (let z = 0; z < likes_test.length; z++) {
+
+                        if (likes_test[z]['post_id'] === post._id) {
+
+
+                            let likes_user = likes_test[z]['username'];
+                            console.log(likes_test[z]);
+
+
+                            likes_temp+=`<span class="comment-like-user">${likes_user}님</span>`;
+
+
+
+                        }
+
+
+                    }
+
+                    likes_temp=likes_temp+comment_temp_test;
+
+
 
                     for (let j = 0; j < comments.length; j++) {
                         let comment = comments[j];
@@ -138,17 +164,28 @@ function get_posts(username, page) {
             ><i class="fa ${class_heart}" aria-hidden="true"></i></span
           >&nbsp;<span class="like-num"
             >${num2str(post["count_heart"])}</span
+
           >
         </a>
         <button class="comment-button" onclick='$("#comment-area${i}").toggleClass("active")'></button>
           <dl>
-        <dt class="sr-only">댓글 수</dt>
-        <dd class="commnet-count">${commentCounts}</dd>
+            <div>
+                <dt class="sr-only">댓글 수</dt>
+                <dd class="commnet-count">${commentCounts}</dd>
+            </div>
+                <div>
+                <dt class="sr-only">좋아요 한 사람</dt>
+                <dd>  ${likes_temp} </dd>
+                </div>
         </dl>
+       
       </div>
     </nav>
   </div>
 </article>
+
+    </div>
+
 
 
 
@@ -213,20 +250,30 @@ function get_posts(username, page) {
           onclick="toggle_like('${post["_id"]}', 'heart')"
         >
           <span class="icon is-small"
-            ><i class="fa ${class_heart}" aria-hidden="true"></i></span
+            ><i class="fa ${class_heart} " aria-hidden="true"></i></span
           >&nbsp;<span class="like-num"
             >${num2str(post["count_heart"])}</span
           >
         </a>
       <button class="comment-button"  onclick='$("#comment-area${i}").toggleClass("active")'></button>
       <dl>
-        <dt class="sr-only">댓글 수</dt>
-        <dd class="commnet-count">${commentCounts}</dd>
+<div>
+                <dt class="sr-only">댓글 수</dt>
+                <dd class="commnet-count">${commentCounts}</dd>
+            </div>
+                <div>
+                <dt class="sr-only">좋아요 한 사람</dt>
+                <dd>  ${likes_temp} </dd>
+                </div>
 </dl>
+
       </div>
     </nav>
   </div>
 </article>
+
+        </div>
+
   <div class="comment-area" id="comment-area${i}">
         ${comment_temp}   
    </div>
