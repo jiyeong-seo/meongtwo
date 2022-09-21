@@ -104,11 +104,11 @@ function get_posts(username, page) {
                         postfile_pic_real = post["postfile_pic_real"];
 
                         html_temp = ` <div class="box post-box" id="${post["_id"]}">
-<div class="post-image-box">
-  <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
-  <img src="/static/${post["postfile_pic_real"]}" />
+<div class="post-image-box delete-post-content">
+  <div class="delete-post" onclick="delete_post('${post["_id"]}')"></div>
 </div>
-<article class="media">
+  <img src="/static/${post["postfile_pic_real"]}" />
+<article class="media post-media">
   <div class="media-left">
     <a class="image is-64x64" href="/user/${post["username"]}">
       <img
@@ -121,10 +121,10 @@ function get_posts(username, page) {
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>${post["profile_name"]}</strong>
-        <small>@${post["username"]}</small> <small>${time_before}</small>
+        <strong class="post-content__name">${post["profile_name"]}</strong>
+        <small class="post-content__username">@${post["username"]}</small> <small class="post-content__time">${time_before}</small>
         <br />
-        ${post["comment"]}
+        <p class="post-content__comment">${post["comment"]}</p>
       </p>
     </div>
     <nav class="level is-mobile">
@@ -143,7 +143,7 @@ function get_posts(username, page) {
         <button class="comment-button" onclick='$("#comment-area${i}").toggleClass("active")'></button>
           <dl>
         <dt class="sr-only">댓글 수</dt>
-        <dd>${commentCounts}</dd>
+        <dd class="commnet-count">${commentCounts}</dd>
         </dl>
       </div>
     </nav>
@@ -182,11 +182,11 @@ function get_posts(username, page) {
 </div>`;
                     } else {
                         html_temp = ` <div class="box post-box" id="${post["_id"]}">
-<div class="post-image-box">
-  <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
-
+<div class="post-image-box delete-post-content">
+  <div class="delete-post" onclick="delete_post('${post["_id"]}')"></div>
 </div>
-<article class="media">
+
+<article class="media post-media">
   <div class="media-left">
     <a class="image is-64x64" href="/user/${post["username"]}">
       <img
@@ -199,10 +199,10 @@ function get_posts(username, page) {
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>${post["profile_name"]}</strong>
-        <small>@${post["username"]}</small> <small>${time_before}</small>
+        <strong class="post-content__name">${post["profile_name"]}</strong>
+        <small class="post-content__username">@${post["username"]}</small> <small class="post-content__time">${time_before}</small>
         <br />
-        ${post["comment"]}
+        <p class="post-content__comment">${post["comment"]}</p>
       </p>
     </div>
     <nav class="level is-mobile">
@@ -221,7 +221,7 @@ function get_posts(username, page) {
       <button class="comment-button"  onclick='$("#comment-area${i}").toggleClass("active")'></button>
       <dl>
         <dt class="sr-only">댓글 수</dt>
-        <dd>${commentCounts}</dd>
+        <dd class="commnet-count">${commentCounts}</dd>
 </dl>
       </div>
     </nav>
@@ -354,7 +354,7 @@ function delete_post(id) {
             post_id_give: post_id
         },
         success: function (response) {
-            alert(response["msg"])
+            alert(response);
             window.location.reload();
         },
     });
