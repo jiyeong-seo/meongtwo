@@ -9,43 +9,43 @@ function post() {
     form_data.append("img_file_give", file);
     console.log(comment, today, file, form_data);
 
-  $.ajax({
-    type: "POST",
-    url: "/posting",
-    data: form_data,
-    cache: false,
-    contentType: false,
-    processData: false,
-    success: function (response) {
-      $("#modal-post").removeClass("is-active");
-      window.location.reload();
-    },
-  });
+    $.ajax({
+        type: "POST",
+        url: "/posting",
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            $("#modal-post").removeClass("is-active");
+            window.location.reload();
+        },
+    });
 }
 
 function commentPost(index, id) {
-  let comment = $(`#comment-post${index}`).val();
-  console.log("comment-post ==>", comment);
-  let today = new Date().toISOString();
-  let form_data = new FormData();
-  form_data.append("comment_give", comment);
-  form_data.append("date_give", today);
-  form_data.append("id_give", id);
+    let comment = $(`#comment-post${index}`).val();
+    console.log("comment-post ==>", comment);
+    let today = new Date().toISOString();
+    let form_data = new FormData();
+    form_data.append("comment_give", comment);
+    form_data.append("date_give", today);
+    form_data.append("id_give", id);
 
-  console.log(comment, today, form_data, id);
-  console.log("id ===>", typeof id);
-  $.ajax({
-    type: "POST",
-    url: "/posting/comment",
-    data: form_data,
-    cache: false,
-    contentType: false,
-    processData: false,
-    success: function (response) {
-      console.log("response ===>", response);
-      // window.location.reload()
-    },
-  });
+    console.log(comment, today, form_data, id);
+    console.log("id ===>", typeof id);
+    $.ajax({
+        type: "POST",
+        url: "/posting/comment",
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            console.log("response ===>", response);
+            // window.location.reload()
+        },
+    });
 }
 
 function get_posts(username, page) {
@@ -67,15 +67,15 @@ function get_posts(username, page) {
                     let post = posts[i]
                     let time_post = new Date(post["date"])
                     let time_before = time2str(time_post)
-                    let class_heart = post['heart_by_me'] ? "fa-heart": "fa-heart-o"
+                    let class_heart = post['heart_by_me'] ? "fa-heart" : "fa-heart-o"
 
-          // 포스팅 사진
-          let html_temp = ``;
-          let postfile_pic_real = "";
-          if (!post["postfile_pic_real"] == "") {
-            postfile_pic_real = post["postfile_pic_real"];
+                    // 포스팅 사진
+                    let html_temp = ``;
+                    let postfile_pic_real = "";
+                    if (!post["postfile_pic_real"] == "") {
+                        postfile_pic_real = post["postfile_pic_real"];
 
-            html_temp = ` <div class="box" id="${post["_id"]}">
+                        html_temp = ` <div class="box" id="${post["_id"]}">
           <div class="post-image-box">
             <img src="/static/${post["postfile_pic_real"]}" />
           </div>
@@ -94,8 +94,8 @@ function get_posts(username, page) {
                 <p>
                   <strong>${post["profile_name"]}</strong>
                   <small>@${
-                    post["username"]
-                  }</small> <small>${time_before}</small>
+                            post["username"]
+                        }</small> <small>${time_before}</small>
                   <br />
                   ${post["comment"]}
                 </p>
@@ -127,8 +127,8 @@ function get_posts(username, page) {
                 <p>
                   <strong>${post["profile_name"]}</strong>
                   <small>@${
-                    post["username"]
-                  }</small> <small>${time_before}</small>
+                            post["username"]
+                        }</small> <small>${time_before}</small>
                   <br />
                   ${post["comment"]}
                 </p>
@@ -153,15 +153,15 @@ function get_posts(username, page) {
                 <div class="level-right">
                   <div class="level-item">
                     <a class="button is-sparta" onclick="commentPost(${i}, '${
-              post["_id"]
-            }')">댓글 등록</a>
+                            post["_id"]
+                        }')">댓글 등록</a>
                   </div>
                 </div>
               </nav>
             </div>
           </div>`;
-          } else {
-            html_temp = ` <div class="box" id="${post["_id"]}">
+                    } else {
+                        html_temp = ` <div class="box" id="${post["_id"]}">
           <div class="post-image-box">
             <img src="/static/${post["postfile_pic_real"]}" />
           </div>
@@ -180,8 +180,8 @@ function get_posts(username, page) {
                 <p>
                   <strong>${post["profile_name"]}</strong>
                   <small>@${
-                    post["username"]
-                  }</small> <small>${time_before}</small>
+                            post["username"]
+                        }</small> <small>${time_before}</small>
                   <br />
                   ${post["comment"]}
                 </p>
@@ -211,8 +211,8 @@ function get_posts(username, page) {
                 <p>
                   <strong>${post["profile_name"]}</strong>
                   <small>@${
-                    post["username"]
-                  }</small> <small>${time_before}</small>
+                            post["username"]
+                        }</small> <small>${time_before}</small>
                   <br />
                   ${post["comment"]}
                 </p>
@@ -235,14 +235,14 @@ function get_posts(username, page) {
                 <div class="level-right">
                   <div class="level-item">
                     <a class="button is-sparta" onclick="commentPost(${i}, '${
-              post["_id"]
-            }')">댓글 등록</a>
+                            post["_id"]
+                        }')">댓글 등록</a>
                   </div>
                 </div>
               </nav>
             </div>
           </div>`;
-          }
+                    }
 
                     $("#post-box").append(html_temp);
                 }

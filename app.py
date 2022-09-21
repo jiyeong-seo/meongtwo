@@ -1,4 +1,4 @@
-import os
+import os, random, string
 
 from pymongo import MongoClient
 import jwt
@@ -56,7 +56,7 @@ def user(username):
 
         user_info = db.users.find_one({"username": username}, {"_id": False})
 
-        #페이저 프로필용 카운트
+        # 페이저 프로필용 카운트
         post_count = int((db.posts.count_documents({"username": username}) / page_view_config) + 1)
         return render_template('user.html', user_info=user_info, status=status, post_count=post_count)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
@@ -124,12 +124,32 @@ def save_img():
         }
         if 'file_give' in request.files:
             file = request.files["file_give"]
-            filename = secure_filename(file.filename)
-            extension = filename.split(".")[-1]
+
+            # 이미지 업로드 경로 설정
+            path = "./static/profile_pics/"
+
+            # 이미지 업로드 경로가 존재 하지 않을 경우 생성
+            if not os.path.exists(path):
+                os.mkdir(path)
+
+            # filename = secure_filename(file.filename) -secure_filename()은 한글을 지원하지 않는다
+            # 자바스크립트로 username 유효성 검사 중 이므로 한글은 올 수 없다 (유효성 처리 필요 X)
+            receive_filename = file.filename
+            extension = receive_filename.split(".")[-1]
+
+            # 이미지 파일이 아닐 경우 리턴 한다
+            extension_temp = extension.upper()
+            print(extension_temp)
+            if extension_temp != "JPG" and extension_temp != "PNG" and extension_temp != "GIF" and extension_temp != "BMP":
+                return redirect(url_for("home"))
+
+            # 업로드 파일 이름을 고유한 ID인 username으로 변경해 DB(문자열 경로)와 서버(파일)에 저장 (프론트에서 사용)
             file_path = f"profile_pics/{username}.{extension}"
             file.save("./static/" + file_path)
-            new_doc["profile_pic"] = filename
+            new_doc["profile_pic"] = receive_filename
             new_doc["profile_pic_real"] = file_path
+            
+        # DB 등록
         db.users.update_one({'username': payload['id']}, {'$set': new_doc})
         return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
@@ -155,12 +175,30 @@ def posting():
         }
         if 'img_file_give' in request.files:
             file = request.files["img_file_give"]
-            filename = secure_filename(file.filename)
+
+            # filename = secure_filename(file.filename) -secure_filename()은 한글을 지원하지 않는다
+            receive_filename = file.filename
 
             # 이미지 업로드 경로가 존재 하지 않을 경우 생성
             path = "./static/post_images/"
             if not os.path.exists(path):
                 os.mkdir(path)
+
+            # 프론트에서 유효성 검사를 하지 않으므로 중복 제어와 보안을 위해 파일 명을 랜덤한 값으로 바꿔 줄 필요가 있다
+            # secure_filename은 한글을 지원하지 않으므로 직접 변경한다
+            # 파일 이름에 랜덤 문자열 삽입
+            # 랜덤 문자열 갯수
+            length_of_string = 8
+            random_string = ''.join(
+                random.choice(string.ascii_letters + string.digits) for _ in range(length_of_string))
+            index_temp = receive_filename.rfind(".")
+            filename = receive_filename[:index_temp] + random_string + receive_filename[index_temp:]
+
+            # 이미지 파일이 아닐 경우 리턴 한다 (파일 명에 .이 여러개 올 경우 인덱스 마지막 문자열 가져옴 [-1])
+            extension = receive_filename.split(".")[-1]
+            extension_temp = extension.upper()
+            if extension_temp != "JPG" and extension_temp != "PNG" and extension_temp != "GIF" and extension_temp != "BMP":
+                return redirect(url_for("home"))
 
             file_path = f"post_images/{filename}"
             file.save("./static/" + file_path)
@@ -170,6 +208,7 @@ def posting():
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+
 
 @app.route('/posting/comment', methods=['POST'])
 def comment_posting():
@@ -197,6 +236,7 @@ def comment_posting():
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+
 
 @app.route("/get_posts", methods=['GET'])
 def get_posts():
