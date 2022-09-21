@@ -247,7 +247,7 @@
     <ul class="pagination-list">
         {% for i in range(post_count) %}
             <li><a class="pagination-link"
-                   onclick="get_posts('', {{ loop.index }})">{{ loop.index }}</a></li>
+                   onclick="get_posts('{{ user_info.username }}', {{ loop.index }})">{{ loop.index }}</a></li>
         {% endfor %}
     </ul>
 </nav>

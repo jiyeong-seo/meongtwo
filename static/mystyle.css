@@ -134,16 +134,14 @@ body.has-navbar-fixed-top,
 
 .comment-area {
     margin: 20px;
-    display: none;
+    display: none !important;
 }
 
 .comment-area__content {
-    height: 100px;
-    /*overflow: scroll;*/
 }
 
 .active {
-    display: block;
+    display: block !important;
 }
 
 .pagination {
