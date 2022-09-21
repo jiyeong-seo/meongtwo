@@ -66,6 +66,7 @@ function get_posts(username, page) {
         let posts = response["posts"];
         let comments = response.comments;
         let likes_test = response.likes;
+        console.log(likes_test)
 
         for (let i = 0; i < posts.length; i++) {
           let post = posts[i];
@@ -82,7 +83,7 @@ function get_posts(username, page) {
             if (likes_test[z]["post_id"] === post._id) {
 
               let likes_user = likes_test[z]["username"];
-              comment_temp_test = `이 좋아요를 하셨습니다.`;
+              comment_temp_test = `님이 좋아요를 하셨습니다.`;
               likes_temp += `<span class="comment-like-user">${likes_user}, </span>`;
             }
           }
@@ -358,6 +359,7 @@ function toggle_like(post_id, type) {
         console.log("unlike");
         $i_like.addClass(class_o[type]).removeClass(class_s[type]);
         $a_like.find("span.like-num").text(num2str(response["count"]));
+        window.location.reload()
       },
     });
   } else {
@@ -373,6 +375,7 @@ function toggle_like(post_id, type) {
         console.log("like");
         $i_like.addClass(class_s[type]).removeClass(class_o[type]);
         $a_like.find("span.like-num").text(num2str(response["count"]));
+        window.location.reload()
       },
     });
   }
