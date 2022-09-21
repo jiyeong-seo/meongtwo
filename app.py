@@ -5,7 +5,6 @@ import jwt
 import datetime
 import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
-from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import certifi
 from bson.objectid import ObjectId
@@ -244,9 +243,6 @@ def get_posts():
         my_username = payload["id"]
         username_receive = request.args.get("username_give")
 
-        # 댓글 카운터
-        coment_count = db.coments.count_documents({"post_id": post_id_receive})
-
         # 페이저 기능
         # sort(기준 필드,디폴트 값은 정렬(ascending) -1은 역정렬(descending)), list(가져올 갯 수), skip(건너뛸 갯 수 offset)
         page_receive = request.args.get("page")
@@ -272,7 +268,7 @@ def get_posts():
             post["heart_by_me"] = bool(
                 db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": my_username}))
 
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"], "comments": comments, "comentCount": coment_count})
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "my_username": payload["id"], "comments": comments})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
