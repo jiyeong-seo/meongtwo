@@ -9,77 +9,81 @@ function post() {
     form_data.append("img_file_give", file);
     console.log(comment, today, file, form_data);
 
-  $.ajax({
-    type: "POST",
-    url: "/posting",
-    data: form_data,
-    cache: false,
-    contentType: false,
-    processData: false,
-    success: function (response) {
-      $("#modal-post").removeClass("is-active");
-      window.location.reload();
-    },
-  });
+    $.ajax({
+        type: "POST",
+        url: "/posting",
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            $("#modal-post").removeClass("is-active");
+            window.location.reload();
+        },
+    });
 }
 
 function commentPost(index, id) {
-  let comment = $(`#comment-post${index}`).val();
-  console.log("comment-post ==>", comment);
-  let today = new Date().toISOString();
-  let form_data = new FormData();
-  form_data.append("comment_give", comment);
-  form_data.append("date_give", today);
-  form_data.append("id_give", id);
+    let comment = $(`#comment-post${index}`).val();
+    console.log("comment-post ==>", comment);
+    let today = new Date().toISOString();
+    let form_data = new FormData();
+    form_data.append("comment_give", comment);
+    form_data.append("date_give", today);
+    form_data.append("id_give", id);
 
-  console.log(comment, today, form_data, id);
-  console.log("id ===>", typeof id);
-  $.ajax({
-    type: "POST",
-    url: "/posting/comment",
-    data: form_data,
-    cache: false,
-    contentType: false,
-    processData: false,
-    success: function (response) {
-      console.log("response ===>", response);
-      window.location.reload()
-    },
-  });
+    console.log(comment, today, form_data, id);
+    console.log("id ===>", typeof id);
+    $.ajax({
+        type: "POST",
+        url: "/posting/comment",
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            console.log("response ===>", response);
+            window.location.reload()
+        },
+    });
 }
 
 function get_posts(username, page) {
-  if (username === undefined) {
-    username = "";
-  }
-  if (page === undefined) {
-    page = 1;
-  }
+    if (username === undefined) {
+        username = "";
+    }
+    if (page === undefined) {
+        page = 1;
+    }
 
-  $("#post-box").empty();
-  $.ajax({
-    type: "GET",
-    url: `/get_posts?username_give=${username}&page=${page}`,
-    data: {},
-    success: function (response) {
-      if (response["result"] === "success") {
-        let posts = response["posts"];
-        let comments = response.comments;
+    $("#post-box").empty();
+    $.ajax({
+        type: "GET",
+        url: `/get_posts?username_give=${username}&page=${page}`,
+        data: {},
+        success: function (response) {
+            if (response["result"] === "success") {
+                let posts = response["posts"];
+                let comments = response.comments;
 
-        for (let i = 0; i < posts.length; i++) {
-          let post = posts[i];
-          let time_post = new Date(post["date"]);
-          let time_before = time2str(time_post);
-          let class_heart = post["heart_by_me"] ? "fa-heart" : "fa-heart-o";
-          let comment_temp = ``;
+                for (let i = 0; i < posts.length; i++) {
+                    let post = posts[i];
+                    let time_post = new Date(post["date"]);
+                    let time_before = time2str(time_post);
+                    let class_heart = post["heart_by_me"] ? "fa-heart" : "fa-heart-o";
+                    let comment_temp = ``;
+                    let commentCounts = 0;
 
-          for (let j = 0; j < comments.length; j++) {
-            let comment = comments[j];
-            let time_comment = new Date(comment["date"]);
-            let time_before = time2str(time_comment);
+                    for (let j = 0; j < comments.length; j++) {
+                        let comment = comments[j];
+                        let time_comment = new Date(comment["date"]);
+                        let time_before = time2str(time_comment);
 
-            if (post._id === comment.post_id) {
-              comment_temp += `
+
+                        if (post._id === comment.post_id) {
+                            commentCounts += 1;
+
+                            comment_temp += `
                          <div class="content comment-area__content">
                               <img class="comment-area__profile-image" src="./static/${comment.profile_pic_real}" alt="profile image">
                               <h2 class="comment-area__user-name">${comment.profile_name}</h2>
@@ -90,16 +94,16 @@ function get_posts(username, page) {
                               </dl>
                           </div>
                       `;
-            }
-          }
+                        }
+                    }
 
-          // 포스팅 사진
-          let html_temp = ``;
-          let postfile_pic_real = "";
-          if (!post["postfile_pic_real"] == "") {
-            postfile_pic_real = post["postfile_pic_real"];
+                    // 포스팅 사진
+                    let html_temp = ``;
+                    let postfile_pic_real = "";
+                    if (!post["postfile_pic_real"] == "") {
+                        postfile_pic_real = post["postfile_pic_real"];
 
-            html_temp = ` <div class="box post-box" id="${post["_id"]}">
+                        html_temp = ` <div class="box post-box" id="${post["_id"]}">
 <div class="post-image-box">
   <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
   <img src="/static/${post["postfile_pic_real"]}" />
@@ -137,6 +141,10 @@ function get_posts(username, page) {
           >
         </a>
         <button class="comment-button" onclick='$("#comment-area${i}").toggleClass("active")'></button>
+          <dl>
+        <dt class="sr-only">댓글 수</dt>
+        <dd>${commentCounts}</dd>
+        </dl>
       </div>
     </nav>
   </div>
@@ -165,18 +173,18 @@ function get_posts(username, page) {
       <div class="level-right">
         <div class="level-item">
           <a class="button is-sparta post-button" onclick="commentPost(${i}, '${
-              post["_id"]
-            }')">댓글 등록</a>
+                            post["_id"]
+                        }')">댓글 등록</a>
         </div>
       </div>
     </nav>
   </div>
 </div>`;
-          } else {
-            html_temp = ` <div class="box post-box" id="${post["_id"]}">
+                    } else {
+                        html_temp = ` <div class="box post-box" id="${post["_id"]}">
 <div class="post-image-box">
   <div class="delete-post" onclick="delete_post('${post["_id"]}')">X</div>
-  <img src="/static/${post["postfile_pic_real"]}" />
+
 </div>
 <article class="media">
   <div class="media-left">
@@ -211,6 +219,10 @@ function get_posts(username, page) {
           >
         </a>
       <button class="comment-button"  onclick='$("#comment-area${i}").toggleClass("active")'></button>
+      <dl>
+        <dt class="sr-only">댓글 수</dt>
+        <dd>${commentCounts}</dd>
+</dl>
       </div>
     </nav>
   </div>
@@ -234,14 +246,14 @@ function get_posts(username, page) {
       <div class="level-right">
         <div class="level-item">
           <a class="button is-sparta post-button" onclick="commentPost(${i}, '${
-              post["_id"]
-            }')">댓글 등록</a>
+                            post["_id"]
+                        }')">댓글 등록</a>
         </div>
       </div>
     </nav>
   </div>
 </div>`;
-          }
+                    }
 
                     $("#post-box").append(html_temp);
                 }
