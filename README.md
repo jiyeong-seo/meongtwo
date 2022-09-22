@@ -1,4 +1,5 @@
 
+![header](https://capsule-render.vercel.app/api?type=wave&color=gradient&height=300&section=header&text=Hi there 👋&fontSize=90)
 
 # 멍슐랭 🎂
 ## 댕댕이들을 위한 수제 간식을 자랑 해봐요!  
