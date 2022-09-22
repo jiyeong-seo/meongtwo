@@ -44,6 +44,7 @@
 ![https://img.youtube.com/vi/i6FT3k1egh0/0.jpg](https://img.youtube.com/vi/i6FT3k1egh0/0.jpg)
 
 ### 시연 영상 : [https://youtu.be/](https://youtu.be/)
+https://www.youtube.com/watch?v=maTpFkykw80
 
 ## 4. 핵심기능
 
