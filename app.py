@@ -86,7 +86,7 @@ def sign_in():
             'id': username_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
-        # certifi 라이브러리 문제로 decode('UTF-8') 추가해줘야 서버에서는 동작합니다
+        # decode('UTF-8') 추가해줘야 서버에서는 동작합니다
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
         return jsonify({'result': 'success', 'token': token})
@@ -181,7 +181,7 @@ def posting():
             "comment": comment_receive,
             "date": date_receive
         }
-        # 서버에서 하면 이 부분으로 진입하지 못할 때가 있다 (시간이 지나면 해결 될 때가 있음)
+
         if 'img_file_give' in request.files:
             file = request.files["img_file_give"]
 
