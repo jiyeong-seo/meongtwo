@@ -1,63 +1,68 @@
 
+![header](https://capsule-render.vercel.app/api?type=waving&color=9ecefc&text=%20멍슐랭%20%20&height=200&fontSize=50&fontColor=5d5d5d)
+# 🐶 멍슐랭 🐶
 
-# 멍슐랭 🎂
-## 댕댕이들을 위한 수제 간식을 자랑 해봐요!  
-### http://bugbear.shop/
+## 강아지들을 위한 견주들의 수제 간식 공유 사이트
 
+### 주소: [http://bugbear.shop/](http://bugbear.shop/)
 
-## 1. 제작 기간 & 팀원 소개
+## 1. 제작 기간
 
-2022년 9월 19일 ~ 2022년 9월 22일  
-3인 1조 팀 프로젝트  
-강희인 : 
-김연태 : 
-서지영 : 
+2022년 9월 19일 ~ 2022년 9월 22일
 
+## 2. 팀원 소개
+
+### 3인 1조 팀 프로젝트
+
+- 강희인 : like 기능, like 한 사용자 추적 기능
+- 김연태 : 페이저 구현, 포스팅 기능
+- 서지영 : 댓글 기능, UI 디자인 구성, 와이어 프레임 설계
+- 공통 : 회원가입, 로그인, 로그아웃 기능
 
 ## 2. 사용 기술
 
-### _**Back-end**_  
+### ***Back-end***
 
-Python 3.8  
-Flask 2.2.2  
+- Python 3.8
+- Flask 2.2.2
 
-### _**Front-end**_  
+### ***Front-end***
 
-JQuery 3.4.1  
-Bulma 0.9.1  
+- JQuery 3.4.1
+- Bulma 0.9.1
 
-### _**Server**_  
+### ***Server***
 
-AWS EC2 (Linux Ubuntu 18.04 LTS)  
+- AWS EC2 (Linux Ubuntu 18.04 LTS)
 
-### **_DataBase_**
+### ***DataBase***
 
-MongoDB Cloud 5.0.12
+- MongoDB Cloud 5.0.12
 
+## 3. 실행 화면
 
-## 3. 실행 화면  
+![https://img.youtube.com/vi/i6FT3k1egh0/0.jpg](https://img.youtube.com/vi/i6FT3k1egh0/0.jpg)
 
-[![[단독] 수도 동파 비용이 횡령? "무리한 감사 드러나" (2022.09.21/뉴스데스크/MBC)](https://img.youtube.com/vi/i6FT3k1egh0/0.jpg)](https://www.youtube.com/i6FT3k1egh0?t=0s)
+### 시연 영상 : [https://youtu.be/](https://youtu.be/)
 
-### 자세한 영상 : https://youtu.be/
+## 4. 핵심기능
 
-## 4. 핵심기능  
+1. **JWT를 이용한 로그인과 회원 가입 구현**
 
-- JWT를 이용한 로그인과 회원 가입 구현  
-######
-- 로그인 사용자에 따른 댓글 작성, 포스트 작성 그리고 삭제 권한 기능
-######
-- 개인 프로필 이미지 저장 및 상태 설명 기능
-######
-- 페이저를 통한 포스트 뷰의 사용자 편의성 
-######
-- 좋아요와 댓글의 수를 직관적으로 볼 수 있도록 표시
-######
-- 파일 저장 중복 방지와 보안 유지를 위한 랜덤 값 이름 부여 기능
+2. **로그인 사용자에 따른 댓글 작성, 포스트 작성 그리고 삭제 권한 기능**
 
+3. **개인 프로필 이미지 저장 및 상태 설명 기능** 
+
+4. **페이저를 통한 포스트 뷰의 사용자 편의성** 
+
+5. **좋아요와 댓글의 수를 직관적으로 볼 수 있도록 표시** 
+
+6. **파일 저장 중복 방지와 보안 유지를 위한 랜덤 값 이름 부여 기능**
 
 ## 5. 팀원 주소
 
-김연태 : https://brajjam.tistory.com/  
-강희인 : https://github.com/Online-abayss  
-서지영 : https://github.com/jiyeong-seo
+- 김연태 : [https://brajjam.tistory.com/](https://brajjam.tistory.com/)
+- 강희인 : [https://github.com/Online-abayss](https://github.com/Online-abayss)
+- 서지영 : [https://github.com/jiyeong-seo](https://github.com/jiyeong-seo)
+
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=9ecefc&height=200&fontSize=50&fontColor=5d5d5d&section=footer)
