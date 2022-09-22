@@ -48,6 +48,9 @@ function commentPost(index, id) {
   });
 }
 
+// likes_temp location.reload를 쓰지 않기 위한 전역 변수화
+let likes_temp = ``;
+
 function get_posts(username, page) {
   if (username === undefined) {
     username = "";
@@ -66,7 +69,6 @@ function get_posts(username, page) {
         let posts = response["posts"];
         let comments = response.comments;
         let likes_test = response.likes;
-        console.log(likes_test)
 
         for (let i = 0; i < posts.length; i++) {
           let post = posts[i];
@@ -76,7 +78,6 @@ function get_posts(username, page) {
           let comment_temp = ``;
           let commentCounts = 0;
           let comment_temp_test = ``;
-          let likes_temp = ``;
           let likes_temp_content;
 
           for (let z = 0; z < likes_test.length; z++) {
@@ -165,10 +166,10 @@ function get_posts(username, page) {
             <dt class="sr-only">댓글 수</dt>
             <dd class="commnet-count">${commentCounts}</dd>
         </div>
-            <div>
+        <div>
             <dt class="sr-only">좋아요 한 사람</dt>
             <dd class="likes-list-content">${likes_temp}</dd>
-            </div>
+        </div>
     </dl>
    
   </div>
@@ -359,7 +360,6 @@ function toggle_like(post_id, type) {
         console.log("unlike");
         $i_like.addClass(class_o[type]).removeClass(class_s[type]);
         $a_like.find("span.like-num").text(num2str(response["count"]));
-        window.location.reload()
       },
     });
   } else {
@@ -375,7 +375,6 @@ function toggle_like(post_id, type) {
         console.log("like");
         $i_like.addClass(class_s[type]).removeClass(class_o[type]);
         $a_like.find("span.like-num").text(num2str(response["count"]));
-        window.location.reload()
       },
     });
   }
